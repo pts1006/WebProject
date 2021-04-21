@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>json.html</title>
+</head>
+
+<body>
+    <script>
+        var myObj = {
+            name: "John",
+            age: 31,
+            city: "New York"
+        };
+        //JSON => JavaScript Object Notification.
+        var jsonObj = '{"name" : "John", "age" : "31", "city" : "New York"}';
+        //JSON => Object
+        var data = JSON.parse(jsonObj);
+        // console.log(data.name, data.age, data.city);
+        // console.log("================================")
+        //Object => Json
+        var json = JSON.stringify(data);
+        // console.log(json);
+
+        // var strObj = "name : John, age : 31, city : New York";
+        // var pos = strObj.indexOf('name');
+        // var name = strObj.substring(5, 9);
+
+
+        // 랜덤 데이터 받아온 뒤로는 위에 세 가지 주석처리한 뒤 밑에 거 입력했음.
+        // '서버에서 받아온 사원 정보'라고 가정.
+        var mockData ='[{"id":1,"first_name":"Nikolaos","last_name":"Jedrysik","email":"njedrysik0@arizona.edu","gender":"Polygender","ip_address":"200.69.7.37"},{"id":19,"first_name":"Hagen","last_name":"Dalinder","email":"hdalinderi@jalbum.net","gender":"Genderqueer","ip_address":"226.26.238.193"},{"id":20,"first_name":"Damita","last_name":"Kenrack","email":"dkenrackj@ezinearticles.com","gender":"Genderfluid","ip_address":"106.61.51.20"}]';
+        // 엔터 인식 못함. 한 줄로 해야 함.
+        var mockObj = JSON.parse(mockData);
+
+        
+        // 테이블 만들어 값 넣기.
+        var table = document.createElement('table');
+        table.setAttribute('border', '1');  //테이블 속성 지정.
+        var cap = document.createElement('caption');
+        cap.innerHTML = '사원 리스트';
+        table.appendChild(cap);
+        for(var i = 0; i < mockObj.length; i++){
+            var tr = document.createElement('tr');
+            for(field in mockObj[i]){
+                var td = document.createElement('td');
+                var text = document.createTextNode(mockObj[i][field]);
+                td.appendChild(text);   // 위의 text 변수를 td에 넣음
+                tr.appendChild(td); // td에 넣은 값을 밖에서 선언했던 tr에 넣음
+            }
+            table.appendChild(tr);  // 위 반복문에서 받은 값들 전부 table에 넣음
+        }
+        document.body.appendChild(table);   //body에 table 적용.
+
+    </script>
+</body>
+
+</html>

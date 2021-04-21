@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>domEx.html</title>
+    <script src="script/domEx.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () { // 밑에 있는 window.onload와 마찬가지의 기능을 수행한다. 46565656
+            //페이지 로딩 시 회원리스트
+            //타이틀과 데이터 처리 ... table, tr, td
+            createTitle('Name', 'Id', 'Score', 'Gender', 'Option');
+            createDate();
+
+            //저장버튼 클릭시...
+            var saveBtn = document.getElementById('saveBtn');
+            saveBtn.addEventListener('click', saveBtnFnc);
+
+            //수정버튼 클릭시
+            var modifyBtn = document.getElementById('modifyBtn');
+            modifyBtn.addEventListener('click', modifyBtnFnc);
+        });
+
+        // window.onload = function () {   // 페이지 전체를 읽고 난 뒤 (가장 마지막에) 실행한다.
+        //     var saveBtn = document.getElementById('saveBtn');
+        //     console.log(saveBtn);
+        // }
+
+        // var saveBtn = document.getElementById('saveBtn');    이렇게만 돼 있으면 saveBtn을 찾을 수 없어서 실행이 안 된다.
+        // console.log(saveBtn);
+    </script>
+
+</head>
+
+<body>
+    
+    <div>
+        <div>이름 : <input type="text" name='name' id='name' value='kim'></div>
+        <div>아이디 : <input type="text" name='id' id='id' value='user44'></div>
+        <div>점수 : <input type="text" name='score' id='score' value='44'></div>
+        <div>성별 : <input type="radio" name='gender' value='남' checked>남성
+            <input type="radio" name='gender' value='여'>여성
+        </div>
+    </div>
+    
+    <div>
+        <button id='saveBtn'>저장</button>
+        <button id='modifyBtn'>수정</button>
+    </div>
+    <hr>
+
+    <table id="tbl" border="1">
+        <caption>Member List</caption>
+    </table>
+    
+
+    <script>
+        //테이블에 넣을 성분
+        var p1 = {
+            name: 'Hong',
+            id: 'user1',
+            score: 80,
+            gender: '남'
+        }
+        var p2 = {
+            name: 'Hwang',
+            id: 'user2',
+            score: 84,
+            gender: '남'
+        }
+        var p3 = {
+            name: 'Park',
+            id: 'user3',
+            score: 86,
+            gender: '여'
+        }
+        var p4 = {
+            name: 'Choi',
+            id: 'user4',
+            score: 82,
+            gender: '여'
+        }
+        var persons = [p1, p2, p3, p4];
+
+        var vTable = document.getElementById('tbl');
+        
+    </script>
+</body>
+
+</html>
