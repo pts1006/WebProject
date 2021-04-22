@@ -33,9 +33,13 @@ public class EmpServlet extends HttpServlet {
 		// [ {"empId":"?", "fName":"?", "IName":"?"}, ... ]
 		int cnt = 0;
 		for (Employee emp : list) {
-			jsonData += "{\"empId\":\"" + emp.getEmployeeId() + "\", \"fName\":\"" + emp.getFirstName()
-					+ "\", \"lName\":\"" + emp.getLastName() + "\", \"email\":\"" + emp.getEmail() + "\", \"salary\":\""
-					+ emp.getSalary() + "\"}";
+			jsonData += "{\"empId\":\"" + emp.getEmployeeId()
+					+ "\", \"fName\":\"" + emp.getFirstName()
+					+ "\", \"lName\":\"" + emp.getLastName()
+					+ "\", \"jobId\":\"" + emp.getJobId()
+					+ "\", \"email\":\"" + emp.getEmail()
+					+ "\", \"hire_date\":\"" + emp.getHireDate()
+					+ "\", \"salary\":\""+ emp.getSalary() + "\"}";
 			if (++cnt == list.size()) {
 				continue;
 			}
@@ -54,6 +58,8 @@ public class EmpServlet extends HttpServlet {
 		String email = req.getParameter("email");
 		String hireDate = req.getParameter("hire_date");
 		String jobId = req.getParameter("job_id");
+		String firstName = req.getParameter("first_name");
+		int salary = Integer.parseInt(req.getParameter("salary"));
 		
 		// Employee에다 값 쑤셔넣기.
 		Employee emp = new Employee();
@@ -61,10 +67,21 @@ public class EmpServlet extends HttpServlet {
 		emp.setEmail(email);
 		emp.setHireDate(hireDate);
 		emp.setJobId(jobId);
+		emp.setFirstName(firstName);
+		emp.setSalary(salary);
 
 		EmpDAO dao = new EmpDAO();
-		dao.insertEmp(emp);
+		Employee empl = dao.insertEmpByseq(emp);
+		//{"eid" : "?", "fname" : "?"....}
 		
-		resp.getWriter().print("<h1>Success</h1>");
+		PrintWriter out = resp.getWriter();
+		out.print("{\"employee_id\" :\"" + empl.getEmployeeId() + "\", "
+				+ "\"first_name\" :\"" + empl.getFirstName() + "\", "
+				+ "\"last_name\" :\"" + empl.getLastName() + "\", "
+				+ "\"job_id\" :\"" + empl.getJobId() + "\", "
+				+ "\"email\" :\"" + empl.getEmail() + "\", "
+				+ "\"hire_date\" :\"" + empl.getHireDate() + "\", "
+				+ "\"salary\" :\"" + empl.getSalary() + "\""
+				+ "}");
 	}
 }

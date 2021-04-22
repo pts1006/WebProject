@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>exam01</title>
+</head>
+
+<body>
+    <form id="frm" action="" method="get">
+        이름 : <input type="text" name="name" id="name"><br>
+        나이 : <input type="text" name="age" id="age"><br>
+        전번 : <input type="text" name="cell" id="cell"><br>
+        <br><br>
+        <input type="submit" value="저장">
+    </form>
+
+    <script>
+        var person = [];
+
+        function submit() {
+            var name = document.getElementById("name").value;
+            var age = document.getElementById("age").value;
+            var cell = document.getElementById("cell").value;
+
+            person = [name, age, cell];
+            
+        
+
+        };
+        console.log(person);
+
+    </script>
+
+    <!-- <script>
+        var arr = [];
+
+        function info() {
+            var neam = document.getElementById("inputName").value;
+            var age = document.getElementById("inputAge").value;
+            var cell = document.getElementById("inputCell").value;
+
+            arr.push(name);
+            arr.push(age);
+            arr.push(cell);
+
+            console.log(arr);
+
+        };
+    </script>
+    <input type="text" id = "inputName" placeholder = "이름 입력"/>
+    <input type="text" id = "inputAge" placeholder = "나이 입력"/>
+    <input type="text" id = "inputCell" placeholder = "전번 입력"/>
+    <button onclick = "info()">저장</button> -->
+
+
+
+</body>
+
+
+
+
+
+</html>

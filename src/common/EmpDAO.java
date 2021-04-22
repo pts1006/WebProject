@@ -22,8 +22,8 @@ public class EmpDAO {
 		Employee empl = new Employee();	// 입력된 정보를 반환해 주기 위해 만들었음.
 		
 		String sql1 = "select employees_seq.nextval from dual";
-		String sql2 = "INSERT INTO emp_temp(employee_id, last_name, email, hire_date, job_id) "
-				+ "values(?, ?, ?, ?, ?)";
+		String sql2 = "INSERT INTO emp_temp(employee_id, first_name, last_name, job_id, email, hire_date, salary, department_ID) "
+				+ "values(?, ?, ?, ?, ?, ?, ?, 50)";
 
 		try {
 			int empId = 0;
@@ -35,20 +35,24 @@ public class EmpDAO {
 
 			psmt = conn.prepareStatement(sql2);
 			psmt.setInt(1, empId);
-			psmt.setString(2, emp.getLastName());
-			psmt.setString(3, emp.getEmail());
-			psmt.setString(4, emp.getHireDate());
-			psmt.setString(5, emp.getJobId());
+			psmt.setString(2, emp.getFirstName());
+			psmt.setString(3, emp.getLastName());
+			psmt.setString(4, emp.getJobId());
+			psmt.setString(5, emp.getEmail());
+			psmt.setString(6, emp.getHireDate());
+			psmt.setInt(7, emp.getSalary());
 			
 			int r = psmt.executeUpdate(); // 처리한 건수 집어 넣는 오브젝트. 확인용
 			System.out.println(r + "건 입력 됨.");
 			
 			//입력한 값을 그대로 반환해 주기 위해서.
 			empl.setEmployeeId(empId);
-			empl.setEmail(emp.getEmail());
+			empl.setFirstName(emp.getFirstName());
 			empl.setLastName(emp.getLastName());
+			empl.setEmail(emp.getEmail());
 			empl.setJobId(emp.getJobId());
 			empl.setHireDate(emp.getHireDate());
+			empl.setSalary(emp.getSalary());
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -58,18 +62,19 @@ public class EmpDAO {
 	}
 
 	public void insertEmp(Employee emp) {
-		String sql = "INSERT INTO emp_temp(employee_id, last_name, email, hire_date, job_id) "
-				+ "values((select max(employee_id)+1 from emp_temp), ?, ?, ?, ?)";
-		// 물음표는 나중에 parameter로 입력하겠다는 의도.
-		// 해당 sql은 'select max ~~', 이 구문이, 커밋하냐 안 하냐에 따라 최대값의 기준이 달라서 좋은 방법은 아님. (동시에
-		// 발생할 경우 최대값이 같아서 중첩되는 현상 발생할 수 있음)
+		String sql = "INSERT INTO emp_temp(employee_id, first_name, last_name, job_id, email, hire_date, salary, department_id)"
+				+ "values((select max(employee_id)+1 from emp_temp), ?, ?, ?, ?, ?, ?, 50)";
+		// 해당 sql은 'select max ~~', 이 구문이, 커밋하냐 안 하냐에 따라 최대값의 기준이 달라서 좋은 방법은 아님.
+		// (동시에 발생할 경우 최대값이 같아서 중첩되는 현상 발생할 수 있음)
 		conn = DBCon.getConnect();
 		try {
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, emp.getLastName());
-			psmt.setString(2, emp.getEmail());
-			psmt.setString(3, emp.getHireDate());
-			psmt.setString(4, emp.getJobId());
+			psmt.setString(1, emp.getFirstName());
+			psmt.setString(2, emp.getLastName());
+			psmt.setString(3, emp.getJobId());
+			psmt.setString(4, emp.getEmail());
+			psmt.setString(5, emp.getHireDate());
+			psmt.setInt(6, emp.getSalary());
 
 			int r = psmt.executeUpdate(); // 처리한 건수 집어 넣음
 			System.out.println(r + "건 입력 됨.");
@@ -109,6 +114,8 @@ public class EmpDAO {
 				emp.setEmployeeId(rs.getInt("employee_id"));
 				emp.setFirstName(rs.getString("first_name"));
 				emp.setLastName(rs.getString("last_name"));
+				emp.setJobId(rs.getString("job_Id"));
+				emp.setHireDate(rs.getString("hire_date"));
 				emp.setSalary(rs.getInt("salary"));
 				emp.setEmail(rs.getString("email"));
 				employees.add(emp);
@@ -158,6 +165,7 @@ public class EmpDAO {
 				emp.setLastName(rs.getString("last_name"));
 				emp.setSalary(rs.getInt("salary"));
 				emp.setEmail(rs.getString("email"));
+				emp.setHireDate(rs.getString("hire_date"));
 				employees.add(emp);
 			}
 		} catch (SQLException e) {
