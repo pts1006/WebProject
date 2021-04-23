@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        // let도 var와 마찬가지로 변수를 선언한다. 단, var와 달리 똑같은 이름의 변수는 사용할 수 없게 한다. 사용하고자 한다면 지역 변수와 전역 변수로서 활용.
+        // const ~> 상수 선언. 새로운 값을 선언할 수 없다.
+        /*
+            예시
+                const num1 = 30;
+                num1 = 10;
+
+                XXXXXXXXXXXXXX
+                기능 안 함.
+        */
+
+        const num1 = {
+            name: 'Hong',
+            age: 10
+        }
+        const num2 = {
+            name: 'Hwong',
+            age: 15
+        }
+        const num3 = {
+            name: 'Park',
+            age: 20
+        }
+
+        //////////////////////////////////
+
+        const numbers = [num1, num2, num3];
+
+        $(numbers).each(function (index, val) { // for-each와는 출력되는 인수 순서가 다름.
+            console.log(index, val.name, val.age);
+        });
+
+        ///////////////////////////////////
+        console.log('--------------------------------');
+        const names = $(numbers).map(function (a, b) {
+            console.log(a, b);
+            return b.name;
+        });
+
+        console.log('--------------------------------');
+        console.log(names);
+
+        ///////////////////////
+        console.log('--------------------------------');
+
+        const ages = $.grep(numbers, function (val, idx){
+            console.log(val, idx);
+            return val.age == 15;
+            //리턴 값이 true 일 때만 반환한다.
+        });
+
+        console.log('--------------------------------');
+        console.log(ages);
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

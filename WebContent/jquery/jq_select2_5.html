@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function(){
+
+            //nth에서 n은 변수
+
+            $("#menu1 li:nth-child(1)").css({"background-color" : "#ff0"});
+            // menu1의 li 위에서 1 번째에 해당
+            $("#menu1 li:nth-child(2n)").css({"border" : " 2px dashed #f00"});
+            //          2의 배수에 해당
+            $("#menu2 li:nth-last-child(2)").css({"background-color" : "#0ff"});
+            // menu2의 li 끝에서 2 번째에 해당
+        });
+    </script>
+</head>
+<body>
+    <h1>탐색 선택자</h1>
+    <ul id = "menu1">
+        <li>내용1-1</li>
+        <li>내용1-2</li>
+        <li>내용1-3</li>
+        <li>내용1-4</li>
+    </ul>
+    
+    <ul id = "menu2">
+        <li>내용2-1</li>
+        <li>내용2-2</li>
+        <li>내용2-3</li>
+    </ul>
+</body>
+</html>
