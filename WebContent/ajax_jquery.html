@@ -2,88 +2,86 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ajax.html</title>
-    <!--
-        동기 비동기
-        동기 : 기다림
-        비동기 : 안 기다림  : 웹페이지를 리로드하지 않고 데이터를 불러오는 방식
-        회원 가입 및 본인 인증 작업 때 쓰이는 듯?
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ajax_jquery.html</title>
+<script src="js/jquery-3.6.0.min.js"></script>
+<!--
+        제이쿼리 수업
+        앞에서 만든 ajax 파일을 제이쿼리로 바꾼다.
     -->
-    <script>
-        //body.form에 있는 걸 실행하기 위한 함수
-        document.addEventListener('DOMContentLoaded', function () {
-            var frm = document.getElementById('frm');
-            // 밑에서 만든, form의 아이디인'frm'을 받아와서 변수 frm에 넣는다.
+<script>
+        $(document).on('DOMContentLoaded', function () {
 
-            frm.addEventListener('submit', function (e) { // e = 이벤트   => 이벤트에 대한 정보를 서브밋
+            var frm = $('#frm');
+            frm.on('submit', function (e) {
                 e.preventDefault();
-                // 서브밋 기능을 막아 놓는다.   => 페이지 넘어가지 못하게
-                console.log(e);
-
-                var fn = document.getElementById('first_name').value;
-                var ln = document.getElementById('last_name').value;
-                // ln = last name이란 의미. last_name에서 얻은 밸류(값)를 ln변수에 담는다.
-                var em = document.getElementById('email').value;
-                var hd = document.getElementById('hire_date').value;
-                var ji = document.getElementById('job_id').value;
-                var sal = document.getElementById('salary').value;
+                
+                var ln = $('#last_name').val();
+                var em = $('#email').val();
+                var hd = $('#hire_date').val();
+                var ji = $('#job_id').val();
+                var fn = $('#first_name').val();
+                var sa = $('#salary').val();
 
                 var data = 'first_name=' + fn +
                     '&last_name=' + ln +
                     '&email=' + em +
                     '&hire_date=' + hd +
                     '&job_id=' + ji +
-                    '&salary=' + sal;
+                    '&salary=' + sa;
+                
+                $.ajax({
+                	url : 'empList.do',
+                	type : 'post',
+                	data : data,
+                	success : function(result){
+                        var obj = JSON.parse(result);
+                        var trTag = $('<tr />');
+                        for (var field in obj) {
+                            $('<td />').html(obj[field]);
+                            trTag.append(tdTag);
+                        }
+                        var td = $('<td />');
+                        var btn = $('<button />').html('삭제');
+                        td.append(btn);
+                        trTag.append(td);
+                        table.append(trTag);
+                	},
+                	error : function(reject){
+                		console.error(`error : ${reject.status}, message : ${reject.statusText}`);
+                	}
+                });	//xhtp.onreadystatechange = function () { ~~~ 이게 너무 길어서 제이쿼리 방식으로 바꿈.
+                
                 var xhtp = new XMLHttpRequest();
                 xhtp.open('post', 'empList.do');
-                //다른 곳에서 get 방식을 한 번 썼기 때문에 뭐가 겹치나 봄. 그래서 post 방식
-                //get은 header 영역에 들어가고, post는 body 영역에 들어간다. ???? 그냥 그런갑다 하자.
                 xhtp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 xhtp.send(data);
 
-                xhtp.onreadystatechange = function () {
-                    if (xhtp.readyState == 4 && xhtp.status == 200) {
-                        console.log(xhtp.responseText);
-                        // 결과 제대로 받아오는지 확인하자.
-
-                        var obj = JSON.parse(xhtp.responseText); // 제이슨 타입으로 바꿔 준다.
-                        console.log(
-                            obj.employee_id,
-                            obj.first_name,
-                            obj.last_name,
-                            obj.email,
-                            obj.job_id,
-                            obj.hire_date,
-                            obj.salary);
-                    }
-                }
             });
         });
     </script>
 </head>
 
 <body>
-    <!--아이디 값을 입력해 놓으면 다른 곳에서 가져가 쓰기 수월하다.-->
-    <form id="frm" action="empList.do" method="POST">
-        <!--처리방식 POST-->
-        FirstName : <input type="text" name="first_name" id="first_name"><br>
-        LastName : <input type="text" name="last_name" id="last_name"><br>
-        JobId : <input type="text" name="job_id" id="job_id"><br>
-        Email : <input type="text" name="email" id="email"><br>
-        HireDate : <input type="date" name="hire_date" id="hire_date"><br>
-        Salary : <input type="text" name="salary" id="salary">
-        <br><br>
-        <input type="submit" value="저장">
-        <input type="reset" value="취소">
-    </form>
+	<!--아이디 값을 입력해 놓으면 다른 곳에서 가져가 쓰기 수월하다.-->
+	<form id="frm" action="empList.do" method="POST">
+		<!--처리방식 POST-->
+		FirstName : <input type="text" name="first_name" id="first_name"><br>
+		LastName : <input type="text" name="last_name" id="last_name"><br>
+		JobId : <input type="text" name="job_id" id="job_id"><br>
+		Email : <input type="text" name="email" id="email"><br>
+		HireDate : <input type="date" name="hire_date" id="hire_date"><br>
+		Salary : <input type="text" name="salary" id="salary"> <br>
+		<br> <input type="submit" value="저장"> <input type="reset"
+			value="취소">
+	</form>
 
-    <br>
+	<br>
 
-    <div id="show"></div>
-    <script>
+	<div id="show"></div>
+	<script>
         var title = {
             employeeId: '사원번호',
             firstName: '이름',
@@ -95,8 +93,6 @@
             option: '기능'
         };
 
-        var count = 0;
-
         /*
             ajax 진행 과정
             1. ~ 4.
@@ -104,25 +100,22 @@
 
         // 1. XMLHttpRequest 오브젝트
         var xhtp = new XMLHttpRequest();
-        //서버에 요청하고 비동기 방식으로 받아 옴.
+
 
         // 2. callback 함수
-        //on = 이벤트 발생
-        xhtp.onreadystatechange = function () { // 상태가 바뀔 때 이 함수를 사용해라
-            // console.log(xhtp.readyState, xhtp.status);
+
+        xhtp.onreadystatechange = function () {
+
             if (xhtp.readyState == 4 && xhtp.status == 200) {
                 var show = document.getElementById('show');
                 var obj = JSON.parse(xhtp.responseText);
-                console.log(obj);
-                // show.innerHTML = obj.name;
 
                 // table tr td => div.appendChild();
-                var table = document.createElement('table');
-                table.setAttribute('border', '1');
+                var table = $('<table />');
+                //document.createElement('table');
 
-
-                // table title 생성
-                var trTitle = document.createElement('tr');
+                table.attr('border', '1');
+                //table.setAttribute('border', '1');
 
                 /*
                 방법 1 : 폐기
@@ -136,62 +129,64 @@
                 */
 
                 // 방법2.
+                /*
                 for (var field in title) {
                     var sth = document.createElement('th');
                     sth.innerHTML = title[field];
                     trTitle.appendChild(sth);
                 }
                 table.appendChild(trTitle);
+                */
+
+                /*
+                방법 3.
+                for (var field in title){
+               		var td = document.createElement('th');
+                	var text = document.createTextNode(title[field]);
+                	td.appendChild(text);
+                	tr.appendChild(td);
+           		}
+                table.appendChild(trTitle);
+				*/
+
+                //방법 4. 제이쿼리
+                var tr = $('<tr />'); //document.createElement('tr');
+                for (var field in title) {
+                    var td = $('<th />').html(title[field]);
+                    tr.append(td);
+                }
+                table.append(tr);
 
                 // 배열의 개수만큼 tr 생성.
                 for (var data of obj) {
-                    var tr = document.createElement('tr');
+                    var tr = $('<tr />'); //document.createElement('tr');
 
-                    // field라는 변수명이 가진 인수(?) 개수만큼 반복해서 td를 생성하겠다.
-                    for (var field in data) {
-                        var td = document.createElement('td');
-
-                        // obj[0]에서 이름만 가져 온다.
-                        var text = document.createTextNode(data[field]);
-
-                        count++
-                        if (count % 7 == 0) {
-                            var btn = document.createElement('button');
-                            btn.innerHTML = '삭제';
-                            btn.onclick = deleteRow;
-
-                            td.appendChild(btn);
+                    for (var field in title) {
+                        if (field == 'func') {
+                            var td = $('<td />');
+                            var btn = $('<button />').html('삭제');
+                            td.append(btn);
+                            tr.append(td);
+                        } else {
+                            var td = $('<td />').html(data[field]);
+                            tr.append(td);
                         }
-                        td.appendChild(text);
-                        tr.appendChild(td);
+
+                        table.append(tr);
 
                     }
 
-
-                    table.appendChild(tr);
+                    $('#show').append(table);
 
                 }
 
-                // div #show 의 자식으로 table을 달아 준다.
-                document.getElementById('show').appendChild(table);
+                // 3. 오픈
+                xhtp.open('get', 'empList.do?dept=50');
+
+                // 4. 센드
+                xhtp.send();
+
             }
-        }
-        /*
-            readyState : 1 => connection
-                        2 => request received
-                        3 => processing request
-                        4 => request finished response ready
-        */
-
-        // 3. 오픈
-        xhtp.open('get', 'empList.do?dept=50');
-        //서버에 index.html 파일을 요청한다.(이 경우 get 방식으로)
-
-        // 4. 센드
-        xhtp.send();
-
-        function deleteRow() {
-            this.parentNode.parentNode.remove();
         }
     </script>
 </body>

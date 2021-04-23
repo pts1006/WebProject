@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!--
+	선택자
+	'$' , '.' , '#' ',' '*'등
+-->
+<style>
+		#sec1 > h1 {
+		background-color: aqua;
+	}
+</style>
+<script src="../js/jquery-3.6.0.min.js"></script>
+<script>
+	//$(function(){} 해도 됨.
+	$(document).ready(function() { // document가 준비되면 function 내용을 실행해라.
+		var sec1 = document.getElementById('sec1');
+		sec1 = $('#sec1');
+		console.log(sec1.children().eq(0).html());
+
+		$('#sec1 > h1').css('color', 'red');
+		// 아이디 명 sec1에 포함되는 h1 태그를 선택해 와서, css ㅡㅡ 빨간 글자색 먹인다.
+
+		$('.sec1 > ul > li').eq(0).css('color', 'green');
+		// eq = 인덱스 값으로 x 번째 값을 지정할 때 사용
+
+		$('.sec1 > ul').children().eq(1).css('color', 'orange');
+		// children = 모든 자식 요소(하위 요소)를 선택한다.
+
+		$('li').eq(0).parents().css('background-color', 'gray');
+		// parent = 상위 , parents = 상위 전체 (최고 부모까지 올라감)
+
+		$('li').eq(0).parent().css('background-color', 'yellow');
+		// li 태그 중 첫 번째 거 가져와서 그 놈의 부모(ul)를 색 변환시킨다.
+	});
+</script>
+</head>
+<body>
+	<h1>Apple</h1>	<!--바디 하위-->
+	<section id="sec1">
+		<h1>Banana</h1>	<!--바디에 더불어 섹션의 하위-->
+		<ul>
+			<li>Yellow</li>
+			<li>Red</li>
+		</ul>
+	</section>
+	<section class="sec1">
+		<h1>Cherry</h1>
+		<ul>
+			<li>Yellow</li>
+			<li>Red</li>
+		</ul>
+	</section>
+</body>
+</html>
