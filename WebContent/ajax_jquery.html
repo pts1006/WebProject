@@ -5,10 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ajax_jquery.html</title>
-    <script src="jquery-3.6.0.min.js"></script>
+    <title>ajax.html</title>
     <!--
-        제이쿼리 수업
+        동기 비동기
+        동기 : 기다림
+        비동기 : 안 기다림  : 웹페이지를 리로드하지 않고 데이터를 불러오는 방식
+        회원 가입 및 본인 인증 작업 때 쓰이는 듯?
     -->
     <script>
         //body.form에 있는 걸 실행하기 위한 함수
@@ -21,7 +23,6 @@
                 // 서브밋 기능을 막아 놓는다.   => 페이지 넘어가지 못하게
                 console.log(e);
 
-                /*
                 var fn = document.getElementById('first_name').value;
                 var ln = document.getElementById('last_name').value;
                 // ln = last name이란 의미. last_name에서 얻은 밸류(값)를 ln변수에 담는다.
@@ -29,17 +30,6 @@
                 var hd = document.getElementById('hire_date').value;
                 var ji = document.getElementById('job_id').value;
                 var sal = document.getElementById('salary').value;
-                */
-
-                //제이쿼리
-                var ln = $('#last_name').val();
-                // 아이디 값이 last_name인 애를 선택하고, 그 애의 밸류 값을 들고 온다.
-                var em = $('#email').val();
-                var hd = $('#hire_date').val();
-                var ji = $('#job_id').val();
-                var fn = $('#first_name').val();
-                var sa = $('#salary').val();
-
 
                 var data = 'first_name=' + fn +
                     '&last_name=' + ln +
