@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>object</title>
+</head>
+
+<body>
+    <script>
+        /*
+        //객체 리터럴
+        var person = {
+            // 배열 두 개와 숫자, 문자열, 두 개의 함수로 이루어진 객체
+            name: ['Bob', 'Smith'],
+            age: 32,
+            gender: 'male',
+            interests: ['music', 'skiing'],
+            // 여기까지 데이터 아이템 ( 객체의 프로퍼티(속성) )
+
+            // 밑의 함수들은 메소드.
+            bio: function () {
+                alert(this.name[0] + ' ' + this.name[1] + ' is ' + this.age + ' years old. He likes ' + this
+                    .interests[0] + ' and ' + this.interests[1] + '.');
+            },
+            greeting: function () {
+                alert('hi! I\'m ' + this.name[0] + '.');
+            }
+        };
+        */
+        /* 
+            해당 객체 내에 있는 갖가지 정보들은 '캡슐화되어 있다'고 한다.
+            불러오려면 '.' 마침표가 필요.
+                ex) person.age
+                    person.interests[1]
+                    person.bio()
+        */
+
+        var person = {
+
+            // 하위 namespaces
+            name: {
+                first: 'Bob',
+                last: 'Smith'
+            },
+            age: 32,
+            gender: 'male',
+            interests: ['music', 'skiing'],
+
+            bio: function () {
+                alert(this.name[0] + ' ' + this.name[1] + ' is ' + this.age + ' years old. He likes ' + this
+                    .interests[0] + ' and ' + this.interests[1] + '.');
+            },
+            greeting: function () {
+                alert('hi! I\'m ' + this.name[0] + '.');
+            }
+        }
+        /*
+            이렇게 name의 객체 속성을 변경해 주었으면 기존 메소드도 변경해 주어야 한다.
+                ex) name[0] ~> name.first
+                    name[1] ~> name.last
+            혹은
+                ex) person['name']['first']
+                    person['name']['last']
+            이런 식으로 쓸 수 있다.
+
+                대괄호 표현의 이점 중 하나는 멤버의 값을 동적으로 변경할 수 있을 뿐 아니라,
+                멤버 이름까지도 동적으로 사용할 수 있다는 것.
+        */
+
+        var myDataName = 'height';
+        var myDataValue = '1.75m';
+
+        person[myDataName] = myDataValue;
+        // 이렇게 하면 객체 리터럴 바깥에서 객체 안에 새 속성을 넣을 수 있다.
+
+        // this = 지금 동작하고 있는 코드를 가지고 있는 객체를 가리킨다. ( 위 예제에서는 객체 person과 동일 )
+
+        var person1 = {
+            name: 'Chris',
+            greeting: function () {
+                alert('Hi! I\'m ' + this.name + '.');
+            }
+        }
+        var person2 = {
+            name: 'Brian',
+            greeting: function () {
+                alert('Hi! I\'m ' + this.name + '.');
+            }
+        }
+
+        var myDiv = document.createElement('div');
+        var myVideo = document.querySelector('video');
+
+        var myNotification = new Notification('Hello!');
+    </script>
+</body>
+
+</html>

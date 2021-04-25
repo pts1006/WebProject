@@ -5,18 +5,66 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>exam02</title>
-    <script src="members.json"></script>
+    
 </head>
+
 <body>
 
     <script>
+
         var table = document.createElement('table');
         table.setAttribute('border', '1');
         
-        for(var i = 0; i < ; i++){
-            var tr = document.createElement('tr');
-            for(field in )
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'members.json'); 
+        
+        xhr.onreadystatechange = function() {
+            if ( xhr.readyState == 4 && xhr.status == 200 ) {
+                setTable(xhr.responseText);
+            }
         }
+
+        xhr.send();
+
+        function setTable(data) {
+            var arr = JSON.parse(data);
+            var table_title = document.createElement('tr');
+            for (key in arr[0]) {
+                var th = document.createElement('th');
+                th.innerHTML = key;
+                table_title.appendChild(th);
+            }
+            table.appendChild(table_title);
+            // arr 안에 데이터가 10개야 
+            // 우리가 for in을 쓰는데 참조할 배열이 오브젝트를 보고있음.
+            // 그래서 어레이 타입이 아니기에 박살남 못찾음
+            for (var i = 0; i < arr.length; i++) {
+                var tr = document.createElement('tr');
+
+                getKeyName(tr, arr[i]);
+                
+                // for(key in arr[i]) {
+                //     var sth = document.createElement('th');
+                //     sth.innerHTML = arr[i][key];
+                //     tr.appendChild(sth);
+                // }
+                
+                table.appendChild(tr);
+            }
+
+            document.querySelector('body').appendChild(table);
+        }
+
+        function getKeyName(tr, obj) {
+            for(key in obj) {
+                var sth = document.createElement('th');
+                sth.innerHTML = obj[key];
+                tr.appendChild(sth);
+            }
+        }
+        // array = [], object = {}
+        // array = [{}, {}, {}]
+        // array = [object= {}, object={}];
     </script>
     
 

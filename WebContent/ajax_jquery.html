@@ -2,22 +2,22 @@
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ajax_jquery.html</title>
-<script src="js/jquery-3.6.0.min.js"></script>
-<!--
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax_jquery.html</title>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <!--
         제이쿼리 수업
         앞에서 만든 ajax 파일을 제이쿼리로 바꾼다.
     -->
-<script>
+    <script>
         $(document).on('DOMContentLoaded', function () {
 
             var frm = $('#frm');
             frm.on('submit', function (e) {
                 e.preventDefault();
-                
+
                 var ln = $('#last_name').val();
                 var em = $('#email').val();
                 var hd = $('#hire_date').val();
@@ -31,12 +31,12 @@
                     '&hire_date=' + hd +
                     '&job_id=' + ji +
                     '&salary=' + sa;
-                
+
                 $.ajax({
-                	url : 'empList.do',
-                	type : 'post',
-                	data : data,
-                	success : function(result){
+                    url: 'empList.do',
+                    type: 'post',
+                    data: data,
+                    success: function (result) {
                         var obj = JSON.parse(result);
                         var trTag = $('<tr />');
                         for (var field in obj) {
@@ -48,12 +48,13 @@
                         td.append(btn);
                         trTag.append(td);
                         table.append(trTag);
-                	},
-                	error : function(reject){
-                		console.error(`error : ${reject.status}, message : ${reject.statusText}`);
-                	}
-                });	//xhtp.onreadystatechange = function () { ~~~ 이게 너무 길어서 제이쿼리 방식으로 바꿈.
-                
+                    },
+                    error: function (reject) {
+                        console.error(
+                            `error : ${reject.status}, message : ${reject.statusText}`);
+                    }
+                }); //xhtp.onreadystatechange = function () { ~~~ 이게 너무 길어서 제이쿼리 방식으로 바꿈.
+
                 var xhtp = new XMLHttpRequest();
                 xhtp.open('post', 'empList.do');
                 xhtp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -65,23 +66,22 @@
 </head>
 
 <body>
-	<!--아이디 값을 입력해 놓으면 다른 곳에서 가져가 쓰기 수월하다.-->
-	<form id="frm" action="empList.do" method="POST">
-		<!--처리방식 POST-->
-		FirstName : <input type="text" name="first_name" id="first_name"><br>
-		LastName : <input type="text" name="last_name" id="last_name"><br>
-		JobId : <input type="text" name="job_id" id="job_id"><br>
-		Email : <input type="text" name="email" id="email"><br>
-		HireDate : <input type="date" name="hire_date" id="hire_date"><br>
-		Salary : <input type="text" name="salary" id="salary"> <br>
-		<br> <input type="submit" value="저장"> <input type="reset"
-			value="취소">
-	</form>
+    <!--아이디 값을 입력해 놓으면 다른 곳에서 가져가 쓰기 수월하다.-->
+    <form id="frm" action="empList.do" method="POST">
+        <!--처리방식 POST-->
+        FirstName : <input type="text" name="first_name" id="first_name"><br>
+        LastName : <input type="text" name="last_name" id="last_name"><br>
+        JobId : <input type="text" name="job_id" id="job_id"><br>
+        Email : <input type="text" name="email" id="email"><br>
+        HireDate : <input type="date" name="hire_date" id="hire_date"><br>
+        Salary : <input type="text" name="salary" id="salary"> <br>
+        <br> <input type="submit" value="저장"> <input type="reset" value="취소">
+    </form>
 
-	<br>
+    <br>
 
-	<div id="show"></div>
-	<script>
+    <div id="show"></div>
+    <script>
         var title = {
             employeeId: '사원번호',
             firstName: '이름',

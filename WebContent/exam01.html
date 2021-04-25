@@ -9,14 +9,17 @@
 </head>
 
 <body>
-    <form id="frm" action="" method="get">
+    
         이름 : <input type="text" name="name" id="name"><br>
         나이 : <input type="text" name="age" id="age"><br>
         전번 : <input type="text" name="cell" id="cell"><br>
         <br><br>
-        <input type="submit" value="저장">
-    </form>
+        <input type="button" value="저장" onclick="submit()">
 
+        <input type="text" id = "inputName" placeholder = "이름 입력"/>
+        <input type="text" id = "inputAge" placeholder = "나이 입력"/>
+        <input type="text" id = "inputCell" placeholder = "전번 입력"/>
+        <button onclick = "info()">저장</button>
     <script>
         var person = [];
 
@@ -28,17 +31,17 @@
             person = [name, age, cell];
             
         
-
+            console.log(person);
         };
         console.log(person);
 
     </script>
 
-    <!-- <script>
+    <script>
         var arr = [];
 
         function info() {
-            var neam = document.getElementById("inputName").value;
+            var name = document.getElementById("inputName").value;
             var age = document.getElementById("inputAge").value;
             var cell = document.getElementById("inputCell").value;
 
@@ -50,10 +53,7 @@
 
         };
     </script>
-    <input type="text" id = "inputName" placeholder = "이름 입력"/>
-    <input type="text" id = "inputAge" placeholder = "나이 입력"/>
-    <input type="text" id = "inputCell" placeholder = "전번 입력"/>
-    <button onclick = "info()">저장</button> -->
+    
 
 
 

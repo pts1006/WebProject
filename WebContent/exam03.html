@@ -9,4 +9,30 @@
 <body>
     
 </body>
+<script>
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'employees.xml');
+    xhr.onreadystatechange = function() {
+        if ( xhr.readyState == 4 & xhr.status == 200 ) {
+           getXMLData(xhr.responseXML);
+        }
+    }
+    xhr.send();
+
+    function getXMLData(data) {
+        document.write("<table border='1'>");
+        var xmlData = data.querySelector('dataset').children;
+        for (var i = 0 ; i < xmlData.length; i++) {
+            document.write('<tr>');
+            var cnt = 0;
+            for(var key in xmlData[i].children) {
+                if ( cnt == 6 ) break;
+                cnt++;
+                document.write('<th>'+xmlData[i].children[key].textContent+'</th>');
+            }
+            document.write('</tr>');
+        }
+        document.write("</table>");
+    }
+</script>
 </html>
