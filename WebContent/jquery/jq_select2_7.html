@@ -53,10 +53,9 @@
         ///////////////////////
         console.log('--------------------------------');
 
-        const ages = $.grep(numbers, function (val, idx){
+        const ages = $.grep(numbers, function (val, idx){//리턴 값이 true 일 때만 반환한다.
             console.log(val, idx);
             return val.age == 15;
-            //리턴 값이 true 일 때만 반환한다.
         });
 
         console.log('--------------------------------');

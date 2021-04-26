@@ -16,7 +16,7 @@
                 "background-color": "#0ff"
             });
             $("#inner_2 p").filter(function (idx, obj) {
-                console.log(idx);
+                console.log(idx);   // 얘 왜 반복문처럼 실행되지?
                 return idx % 2 == 0;
             }).css({
                 "background-color": "#0f0"
