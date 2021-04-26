@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jquery/map2.html</title>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>
+    	$(document).ready(function(){
+    		$.ajax({
+    			url: '../MOCK_DATA.json',
+    			dataType: 'json',
+    			success: function(resolve){
+    				let mapData = $(resolve).filter(function(i, o){
+    					return i < 10;	// 결과를 10개만
+    				}).map(function(i, o){
+    					let trTag = $('<tr />');
+    					trTag.append(
+    							$('<td />').html(o.id),
+    							$('<td />').html(o.first_name),
+    							$('<td />').html(o.last_name),
+    							$('<td />').html(o.email)
+    							);
+    					return trTag;
+    				});
+    				console.log(mapData[0]);
+    				$('#tbl').append(mapData.get());
+    				// get() : 배열을 element로 변환. 인수가 없는 함수로, 프로퍼티를 읽을 때 동작함
+    				//document.getElementById('tbl').appendChild(mapData.get());
+    			},
+    			error: function(reject){
+    				console.error(reject);
+    			}
+    				
+    		});
+    	});
+    </script>
+</head>
+<body>
+    <table id = 'tbl'></table>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>each2.html</title>
+    <style>
+        span {
+            color : blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .ex {
+            font-style: italic;
+        }
+    </style>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    click this <span>색 변경...</span>
+    <ul>
+        <li class = 'ex'>Apple</li>
+        <li>Banana</li>
+        <li>Cherry</li>
+    </ul>
+    click this <span>색 변경...</span>
+    <script>
+        $('span').click(function(){
+            $('li').each(function(){
+                $(this).toggleClass('ex');
+                // 여기서 this는 li태그를 지칭
+                // toggle = 참, 거짓으로 값을 이등분해서 A이거나 B이거나로 나타냄 ( 값의 전환 )
+            });
+        });
+    </script>
+</body>
+</html>

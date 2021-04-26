@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jquery/each3.html</title>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () { // document를 다 읽어 온 다음에 function 안의 값을 넣겠다.
+
+            $.ajax({ // ajax 오브젝트는 XMLHttpRequest(); 와 같은 방식. 즉, open();, send();와 같은 역할
+                url: '../MOCK_DATA.json', // open();
+                dataType: 'json', // 이건 안 적어 줘도 이제는 컴퓨터가 알아서 해 준다.
+                success: successCallFnc,
+                error: errorCallFnc
+            });
+        });
+
+        function successCallFnc(resolve) { // success가 너무 길어져서 함수로 담음
+            console.log(resolve); // 실행 결과 배열이 나오더라.
+            let tbl = $('<table />');
+            tbl.attr('border', '1');
+            $.each(resolve, function (i, o) {
+                // .each()에서 인수로 resolve와 function을 먹인 것. function(index, object)
+                let trTag = $('<tr />');
+                trTag.attr('id', o.id);
+                trTag.mouseover(mouseoverFnc);
+                trTag.mouseout(mouseoutFnc);
+                let btn = $('<button />').html('Del');
+                btn.click((event) => {
+                    console.log($(this), event);
+                    /*
+                        $(this)
+                            - arrow function을 쓸 경우 $(this) 는 o , 즉 object를 가리킴
+                            - function으로 했을 경우에는 btn ㅡ evenet 대상을 가리킴.
+                    */
+                    event.currentTarget.parentNode.parentNode.remove();
+                    // currentTarget = button ( !btn )
+                });
+                trTag.append(
+                    $('<td />').html(o.id),
+                    $('<td />').html(o.first_name),
+                    $('<td />').html(o.last_name),
+                    $('<td />').html(o.email),
+                    $('<td />').append(btn)
+                );
+                tbl.append(trTag);
+            });
+            $('#show').append(tbl);
+            // 모든 기능들은 바깥이 아닌, success 안에 써 줘야 한다.
+        }
+
+        function errorCallFnc(reject) {
+            console.error(reject);
+        }
+
+        function mouseoverFnc() {
+            $(this).css('background-color', 'yellow');
+        }
+
+        function mouseoutFnc() {
+            $(this).css('background-color', ''); // 안 해 주면 노란색으로 물든 채로 남는다.
+        }
+
+        function clickFnc() {
+            alert($(this).attr('id'));
+        }
+    </script>
+</head>
+
+<body>
+    <div id="show"></div>
+</body>
+
+</html>
