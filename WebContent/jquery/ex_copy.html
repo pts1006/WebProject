@@ -7,20 +7,27 @@
 	<script src='../js/jquery-3.6.0.min.js'></script>
 	<script>
 		// 버튼 기능 구현해라.
+		function moveRight(){
+			left.option.innerText.remove();
+			
+		};
+		function moveLeft(){
+
+		};
 	</script>
 </head>
 
 <body>
-	<select name='plus' size='10'>
+	<select name='plus' size='10' id = 'left'>
 		<option>plus1</option>
 		<option>plus2</option>
 		<option>plus3</option>
 		<option>plus4</option>
 		<option>plus5</option>
 	</select>
-	<button id='plus'>+</button>
-	<button id='minus'>-</button>
-	<select name='minus' size='10'>
+	<button id='plus' onclick = "moveRight()">+</button>
+	<button id='minus' onclick = "moveLeft()">-</button>
+	<select name='minus' size='10' id = 'right'>
 		<option>minus1</option>
 		<option>minus2</option>
 		<option>minus3</option>
