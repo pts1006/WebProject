@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jq_select3_2.html</title>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function(){
+            let srcVal = $("#sec_1 img").attr("src");
+            console.log(srcVal);
+
+            $("#sec_1 img").attr({
+                "width" : 200,
+                "src" : srcVal.replace("1.png", "2.png"),
+                // replace() : a를 b로 바꾸겠다.
+                "alt" : "가위"
+            }).removeAttr("border");
+            // removeAttr() : 속성을 제거하겠다.
+        });
+    </script>
+</head>
+<body>
+    <h1>
+        <strong>객체 조작 및 생성</strong>
+    </h1>
+    <section id = "sec_1">
+        <h2>이미지 속성</h2>
+        <p>
+            <img src="../images/1.png" alt="바위" border = "2">
+        </p>
+    </section>
+</body>
+</html>

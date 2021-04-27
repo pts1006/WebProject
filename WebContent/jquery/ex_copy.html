@@ -5,29 +5,19 @@
 	<meta charset="UTF-8">
 	<title>ex.html</title>
 	<script src='../js/jquery-3.6.0.min.js'></script>
-	<script>
-		// 버튼 기능 구현해라.
-		function moveRight(){
-			left.option.innerText.remove();
-			
-		};
-		function moveLeft(){
-
-		};
-	</script>
 </head>
 
 <body>
-	<select name='plus' size='10' id = 'left'>
+	<select name='plus' size='10'>
 		<option>plus1</option>
 		<option>plus2</option>
 		<option>plus3</option>
 		<option>plus4</option>
 		<option>plus5</option>
 	</select>
-	<button id='plus' onclick = "moveRight()">+</button>
-	<button id='minus' onclick = "moveLeft()">-</button>
-	<select name='minus' size='10' id = 'right'>
+	<button id='plus'>+</button>
+	<button id='minus'>-</button>
+	<select name='minus' size='10'>
 		<option>minus1</option>
 		<option>minus2</option>
 		<option>minus3</option>
@@ -35,5 +25,15 @@
 		<option>minus5</option>
 	</select>
 </body>
+<script>
+	// 버튼 기능 구현.
+	$("#minus").click(function () {
+		$('select[name="minus"]').append($('select[name="plus"] :selected'));
+	});
+
+	$("#plus").click(function(){
+		$('select[name="plus"]').append($('select[name="minus"] :selected'));
+	});
+</script>
 
 </html>

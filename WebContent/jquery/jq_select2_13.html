@@ -17,8 +17,7 @@
 
             $("#inner_2 p").not(":first").css({"background-color":"#0f0"});
 
-            $("#inner_2 p").eq(2).end.css({"color":"#f00"});
-            // 적용 안 된 거 같은데? 글자색 빨강계 나와야 하지 않나?
+            $("#inner_2 p").eq(2).end().css({"color":"#f00"});
         });
     </script>
 </head>
