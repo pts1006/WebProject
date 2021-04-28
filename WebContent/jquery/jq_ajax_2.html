@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jq_ajax_2.html</title>
+    <style>
+        tr:nth-of-type(2n){ /* E:nth-of-type(n) : 같은 유형의 n 번째 형제인 E 요소 */
+            background-color: lightgrey;
+        }
+    </style>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            // jquery.get() : url, data, success(function( data, string, XHR )), dataType
+            $.get('../MOCK_DATA.json', function (data) {    // get()을 post()로 바꾸면 톰캣으로 실행해야 한다. y : 
+                console.log(data);
+                let $table = $('<table />').attr('border', '1');
+                // attr() = setAttribute()
+
+                for (let i = 0; i < data.length; i++) {
+                    let $tr = $('<tr />');
+                    let $td_id = $('<td />').html(data[i].id); // i 번째 data의 id를 가져온다.
+                    let $td_fn = $('<td />').html(data[i].first_name);
+                    let $td_ln = $('<td />').html(data[i].last_name);
+                    let $td_em = $('<td />').html(data[i].email);
+
+                    $tr.append(
+                        $td_id,
+                        $td_fn,
+                        $td_ln,
+                        $td_em);
+
+                    $table.append($tr);
+                }
+                $('#show').append($table);
+            }, 'json');
+            // $('#show').html('hello');
+        });
+    </script>
+</head>
+
+<body>
+    <div id="show"></div>
+</body>
+
+</html>

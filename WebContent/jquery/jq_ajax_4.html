@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jq_ajax_4.html</title>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+           $.ajax({
+        	   url: '../ajax.html',
+        	   type: 'get', // or post
+        	   data: 'p1=hello&p2=nice', // 패러메터 1, 패러메터2. 비록 두 개 만들긴 했지만 띄어쓰기하면 안 됨.
+        	   // dataType : 'html', // 자동 적용. 없어도 됨.
+        	   success: function(resolve){	// resolve와 reject는 단지 변수 명
+        		   console.log(resolve);
+        	   },
+        	   error: function(reject){	// 이 결과 보고 싶으면 url 값 변경해 보자.
+        		   window.alert(reject.statusText);
+        		   console.error(`에러코드: ${reject.status}, 에러메세지: ${reject.statusText}`);
+        	   }
+           });
+            
+        });
+    </script>
+</head>
+
+<!--
+	'../' : 이름은 모르겠고, 한 단계 상위 경로
+-->
+
+<body>
+	<form action='memberServlet.do' method='get'>
+		ID:<input type = "number" name = "m_id" id = "m_id" value = 1 /><br>
+		이름:<input type = "text" name = "m_name" id = "m_name" value = 'hong' /><br>
+		나이:<input type = "number" name = "m_age" id = "m_age" value = 20 /><br>
+		<input type= "submit" value = "저장">
+	</form>
+    <div id="show"></div>
+</body>
+
+</html>

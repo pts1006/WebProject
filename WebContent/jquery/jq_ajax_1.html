@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jq_ajax_1.html</title>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function () { // 페이지 로딩 다 한 다음에 실행.
+                        //$(document).ready(function){}과 같음. 'jq_ajax_2.html' 파일 확인.
+            $('#show').load('jq_select1_10.html div#wrap', function (a, b, c) {
+                console.log(a, b, c);
+            });
+            // load() : 외부 콘텐츠를 가져올 때 사용. 특정 부분 지정도 가능. but 시크릿 모드에서는 정상 작동 안 된다.
+            // ※ load나 target은 알아서 head 안에 삽입되고, link나 href는 body 안에 로드하게 됨. 아마도.
+            // 'mid22.html' 파일과 'mid21.html' 파일 함께 보자.
+        });
+    </script>
+</head>
+
+<body>
+    <div id="show"></div>
+</body>
+
+</html>
