@@ -17,12 +17,37 @@ public class EmpDAO {
 	ResultSet rs;
 	PreparedStatement psmt;
 
+	// 닫는 메소드 생성
+	public void close() {
+		if (rs != null) {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (stmt != null) {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (conn != null) {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	public Employee insertEmpByseq(Employee emp) {
-		
+
 		conn = DBCon.getConnect();
-		
-		Employee empl = new Employee();	// 입력된 정보를 반환해 주기 위해 만들었음.
-		
+
+		Employee empl = new Employee(); // 입력된 정보를 반환해 주기 위해 만들었음.
+
 		String sql1 = "select employees_seq.nextval from dual";
 		String sql2 = "INSERT INTO emp_temp(employee_id, first_name, last_name, job_id, email, hire_date, salary, department_ID) "
 				+ "values(?, ?, ?, ?, ?, ?, ?, 50)";
@@ -43,11 +68,11 @@ public class EmpDAO {
 			psmt.setString(5, emp.getEmail());
 			psmt.setString(6, emp.getHireDate());
 			psmt.setInt(7, emp.getSalary());
-			
+
 			int r = psmt.executeUpdate(); // 처리한 건수 집어 넣는 오브젝트. 확인용
 			System.out.println(r + "건 입력 됨.");
-			
-			//입력한 값을 그대로 반환해 주기 위해서.
+
+			// 입력한 값을 그대로 반환해 주기 위해서.
 			empl.setEmployeeId(empId);
 			empl.setFirstName(emp.getFirstName());
 			empl.setLastName(emp.getLastName());
@@ -55,7 +80,7 @@ public class EmpDAO {
 			empl.setJobId(emp.getJobId());
 			empl.setHireDate(emp.getHireDate());
 			empl.setSalary(emp.getSalary());
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -84,21 +109,7 @@ public class EmpDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (psmt != null) {
-				try {
-					psmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			close();
 		}
 	}
 
@@ -126,27 +137,7 @@ public class EmpDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			close();
 
 		}
 		return employees;
@@ -174,32 +165,12 @@ public class EmpDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			close();
 
 		}
 		return employees;
 	}
-	
+
 	// empl_demo
 	public List<Employee> getEmployeeList() {
 		// 사원 정보 가지고 오는 처리 2
@@ -225,75 +196,110 @@ public class EmpDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (stmt != null) {
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			close();
 
 		}
 		return employees;
 	}
-	
+
 	// getEmployeeList()
 	public Map<String, Integer> getEmployeeByDept() {
-		
+
 		// 부서명, 사원수
 		Map<String, Integer> map = new HashMap<>();
 
-		
-		String sql = "SELECT department_name, COUNT(1)\r\n"
-				+ "FROM empl_demo e, departments d\r\n"
-				+ "WHERE e.department_id = d.department_id\r\n"
-				+ "GROUP BY department_name";
+		String sql = "SELECT department_name, COUNT(1)\r\n" + "FROM empl_demo e, departments d\r\n"
+				+ "WHERE e.department_id = d.department_id\r\n" + "GROUP BY department_name";
 		conn = DBCon.getConnect();
-		
+
 		try {
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
-			
-			while(rs.next()) {
-				map.put(rs.getString(1), rs.getInt(2)); //	map.put("부서", 20);
+
+			while (rs.next()) {
+				map.put(rs.getString(1), rs.getInt(2)); // map.put("부서", 20);
 			}
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
-		} finally{
-			if(rs!=null)
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			if(rs!=null)
-				try {
-					psmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			if(rs!=null)
-				try {
-					conn.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+		} finally {
+			close();
 		}
 		return map;
 	}
+
+	// 스케쥴 정보를 가지고 오는 메소드.
+	public List<ScheduleVO> getScheduleList() {
+		conn = DBCon.getConnect();
+
+		String sql = "select * from schedule";
+		List<ScheduleVO> list = new ArrayList<>();
+		try {
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				ScheduleVO vo = new ScheduleVO();
+				vo.setTitle(rs.getString("title"));
+				vo.setStartDay(rs.getString("start_day"));
+				vo.setEndDay(rs.getString("end_day"));
+
+				list.add(vo);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return list;
+	}
+
+	// 한 건 입력
+	public void insertSchedule(ScheduleVO vo) {
+
+		conn = DBCon.getConnect();
+
+		String sql = "insert into schedule(title, start_day, end_day) values(?, ?, ?)";
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, vo.getTitle());
+			psmt.setString(2, vo.getStartDay());
+			psmt.setString(3, vo.getEndDay());
+
+			int r = psmt.executeUpdate(); // 처리한 건수 집어 넣음
+			System.out.println(r + "건 입력 됨.");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+	}
+	
+	// 한 건 삭제
+	public void deleteScedule(ScheduleVO vo) {
+		
+		conn = DBCon.getConnect();
+		
+		String sql = "delete from schedule where title = ?";
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, vo.getTitle());
+			
+			int r = psmt.executeUpdate();
+			if( r == 1 ) {
+				System.out.println(r + "건 삭제.");
+			} else {
+				System.out.println("삭제 안 됨.");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
+
 }
