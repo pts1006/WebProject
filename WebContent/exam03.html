@@ -20,19 +20,19 @@
     xhr.send();
 
     function getXMLData(data) {
-        document.write("<table border='1'>");
+        // document.write("<table border='1'>");
         var xmlData = data.querySelector('dataset').children;
         for (var i = 0 ; i < xmlData.length; i++) {
-            document.write('<tr>');
+            document.write('<ul>');
             var cnt = 0;
             for(var key in xmlData[i].children) {
                 if ( cnt == 6 ) break;
                 cnt++;
-                document.write('<th>'+xmlData[i].children[key].textContent+'</th>');
+                document.write('<li>'+xmlData[i].children[key].textContent+'</li>');
             }
-            document.write('</tr>');
+            document.write('</ul>');
         }
-        document.write("</table>");
+        // document.write("</table>");
     }
 </script>
 </html>
