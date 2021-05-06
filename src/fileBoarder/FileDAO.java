@@ -15,6 +15,56 @@ public class FileDAO {
 	PreparedStatement psmt;
 	ResultSet rs;
 
+	public void deleteFile(FileVO file) {
+
+		conn = DBCon.getConnect();
+
+		String sql = "delete from file_board where num = ?";
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, file.getNum());
+			int r = psmt.executeUpdate();
+			if (r == 1) {
+				System.out.println(r + "건 삭제.");
+			} else {
+				System.out.println("삭제 안 됨.");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+	}
+
+	public FileVO getFile(int num) { // num 값으로 한 건 조회.
+
+		conn = DBCon.getConnect();
+		String sql = "select * from file_board where num =?";
+
+		FileVO file = new FileVO();
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, num);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				file.setAuthor(rs.getString("author"));
+				file.setDay(rs.getString("day"));
+				file.setFileName(rs.getString("file_name"));
+				file.setNum(rs.getInt("num"));
+				file.setTitle(rs.getString("title"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		return file;
+	}
+
 	public void close() {
 		if (rs != null)
 			try {
@@ -35,9 +85,9 @@ public class FileDAO {
 				e.printStackTrace();
 			}
 	}
-	
+
 	public List<FileVO> getFileList() {
-		
+
 		conn = DBCon.getConnect();
 		List<FileVO> list = new ArrayList<>();
 		try {
@@ -45,13 +95,13 @@ public class FileDAO {
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				FileVO vo = new FileVO();
-				
+
 				vo.setAuthor(rs.getString("author"));
 				vo.setDay(rs.getString("day"));
 				vo.setFileName(rs.getString("file_name"));
 				vo.setNum(rs.getInt("num"));
 				vo.setTitle(rs.getString("title"));
-				
+
 				list.add(vo);
 			}
 		} catch (SQLException e) {

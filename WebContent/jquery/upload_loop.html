@@ -3,7 +3,10 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>jquery/upload.html</title>
+	<title>jquery/upload_loop.html</title>
+	<!-- 
+		upload.html 파일에서 반복문 추가해 보기.
+	 -->
 	<style>
 		#img {
 			height: 220px;
@@ -16,40 +19,30 @@
 	</style>
 	<script src="../js/jquery-3.6.0.min.js"></script>
 	<script>
+		
+		var reNum = $('#num').val();
+		var reAuthor = $('#author').val();
+		var reTitle = $('#title').val();
+		var reFileName = $('#filename').val();
+	
 		$(document).ready(function () {
 			// db에 있는 데이터를 화면에 출력
 			$.ajax({
 				url: '../getFileListServlet',
 				dataType: 'json', // json ~> object
 				success: function (result) {
-					// table을 활용해서 리스트를 출력.
-					let table = $('<table id = "tab"/>');
-					table.attr('border', '1');
-					// let table = $('<table />').attr('border', '1'); 과 같음
+					
+					let table = $('<table id = "tab"/>').attr('border', '1');
+					let tr = $('<tr />');
+					console.log(result);
+					// for(var i = 0; result.length; i++){
+						
 
-					table.append(getTitle());
+					// 	$('#tab').append(tr);
+						
+					// }
 
-					for (let obj of result) {
-						let $tr = $('<tr />');
-						let alink = $('<a />').attr('href', 'temp.html').html(obj.title);
-						alink.click(linkClickCallBack);
-						$tr.click(function () {
-							console.log('tr클릭');
-						});
-						let delBtn = $('<button />').html('삭제');
-						delBtn.click(deleteRow);
-						$tr.append(
-							$('<td />').html(obj.num),
-							$('<td />').append(alink),
-							$('<td />').html(obj.author),
-							$('<td />').html(obj.fileName),
-							$('<td />').html(obj.day),
-							$('<td />').html(delBtn)
-						);
-						table.append($tr);
-					}
-
-					$('#show').append(table);
+					// $('#show').append(table);
 				},
 				error: function (err) {
 					console.log(err);
@@ -87,19 +80,6 @@
 				});
 			};
 
-			// 테이블의 타이틀
-			function getTitle() {
-				let $title = $('<tr />');
-				$title.append(
-					$('<th />').html('번호'),
-					$('<th />').html('제목'),
-					$('<th />').html('저자'),
-					$('<th />').html('파일명'),
-					$('<th />').html('날짜'),
-					$('<th />').html('기능')
-				);
-				return $title;
-			};
 
 			// 삭제 기능
 			function deleteRow() {

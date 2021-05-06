@@ -277,20 +277,20 @@ public class EmpDAO {
 		}
 
 	}
-	
+
 	// 한 건 삭제
 	public void deleteScedule(ScheduleVO vo) {
-		
+
 		conn = DBCon.getConnect();
-		
+
 		String sql = "delete from schedule where title = ?";
-		
+
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, vo.getTitle());
-			
+
 			int r = psmt.executeUpdate();
-			if( r == 1 ) {
+			if (r == 1) {
 				System.out.println(r + "건 삭제.");
 			} else {
 				System.out.println("삭제 안 됨.");

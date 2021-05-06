@@ -31,7 +31,7 @@ public class FileUploadServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		response.setCharacterEncoding("UTF-8");
 		System.out.println("doPost call()");
 		String path = "c:/tmp";
 		
