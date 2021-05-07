@@ -162,4 +162,38 @@ public class FileDAO {
 
 		return file;
 	}
+	
+	public boolean updateFile (FileVO vo) {
+		
+		conn = DBCon.getConnect();
+		int cnt = 0;
+		String sql = "update file_board "
+				+ "set author = ?,"
+				+ 		"title = ?,"
+				+ 		"file_name = ? "
+				+ "where num = ?";
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, vo.getAuthor());
+			psmt.setString(2, vo.getTitle());
+			psmt.setString(3, vo.getFileName());
+			psmt.setInt(4, vo.getNum());
+			
+			cnt = psmt.executeUpdate();
+			
+			if ( cnt != 0 ) {
+				System.out.println("수정됨.");
+			} else {
+				System.out.println("수정 안 됨.");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+		return cnt == 0 ? false : true;
+	}
 }
