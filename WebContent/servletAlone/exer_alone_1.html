@@ -19,13 +19,15 @@
                 url: '/WebProject/allDogListServlet',
                 dataType: 'json',
                 success:function(result){
-                	console.log(result);
+
                 	let sTable = $('<table />').attr('border', '1');
                 	sTable.append(addTitle());
                 	
                 	for(let i = 0; i < result.length; i++){
+                		
                 		let tr = $('<tr />');
                 		let modifyBtn = $('<button onclick = "ModifyDog'+i+'" />').html('수정');
+                		
                 		tr.append(
                 			$('<td />').append($('<input type = text" disabled id = "dName'+i+'">').val(result[i].dName)),
                 			$('<td />').append($('<input type = text" id = "species'+i+'">').val(result[i].species)),
@@ -33,8 +35,10 @@
                 			$('<td />').append($('<input type = text" id = "dColor'+i+'">').val(result[i].dColor)),
                 			$('<td />').append($('<input type = text" id = "dSize'+i+'">').val(result[i].dSize))
                 		);
+                		
                 		sTable.append(tr);
                 	}
+                	
                 	$('#show').append(sTable);                	
                 },
                 error:function(err){
@@ -58,55 +62,85 @@
         };
         
         // 제출 버튼
-        submit.onclick(function(){
-        	$.ajax({
-        		url: '',
-        		dataType: '',
-        		succees: function(result){
-        			window.alert('tt')
-        		},
-        		error:function(err){
-        			window.alert('nn')
-        		}
-        	});
+        $('#frm').submit(function(){
+
+            let frm = document.getElementById('frm');
+            let data = new FormData(frm);
+
+            $.ajax({
+                contentType:false,
+                processData:false,
+                url: $('#frm').attr('action'),
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                success: function (){
+                    window.alert('생성')
+                },
+                error: function (err){
+                    console.log(err)
+                }
+            });
         });
+
+        // 수정 버튼 클릭 기능
+        function ModifyDog(){
+            console.log($("#dName"+index).val());
+            let data = {};
+
+            $.ajax({
+                url: '',
+                data: data,
+                type: 'post',
+                dataType: 'json',
+                success: function(){
+                    window.alert('수정됨.');
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            });
+        };
         
     </script>
 </head>
 <body>
-    <table border = "1">
-        <caption>애완견 등록</caption>
-        <tr>
-            <td>이름</td>
-            <td><input type="text" name="dName"></td>
-        </tr>
-        <tr>
-            <td>품종</td>
-            <td><input type="text" name="species"></td>
-        </tr>
-        <tr>
-            <td>나이</td>
-            <td><input type="text" name="age"></td>
-        </tr>
-        <tr>
-            <td>색깔</td>
-            <td><input type="text" name="dColor"></td>
-        </tr>
-        <tr>
-            <td>크기</td>
-            <td>
-            	<input type="radio" name="dSize" value = "big" checked = "checked">큼
-            	<input type="radio" name="dSize" value = "middle">중간
-           		<input type="radio" name="dSize" value = "small">작음
-            </td>
-        </tr>
-        <tr>
-            <th colspan="2">
-                <input type="submit" value="등록">
-                <input type="reset" value="취소">
-            </th>
-        </tr>
-    </table>
+
+    <form id = 'frm' action="/WebProject/insertDogServlet" method="get" enctype="multipart/form-data">	
+        <table border = "1">
+            <caption>애완견 등록</caption>
+            <tr>
+                <td>이름</td>
+                <td><input type="text" name="dName"></td>
+            </tr>
+            <tr>
+                <td>품종</td>
+                <td><input type="text" name="species"></td>
+            </tr>
+            <tr>
+                <td>나이</td>
+                <td><input type="text" name="age"></td>
+            </tr>
+            <tr>
+                <td>색깔</td>
+                <td><input type="text" name="dColor"></td>
+            </tr>
+            <tr>
+                <td>크기</td>
+                <td>
+            	    <input type="radio" name="dSize" value = "big" checked = "checked">큼
+            	    <input type="radio" name="dSize" value = "middle">중간
+           		    <input type="radio" name="dSize" value = "small">작음
+                </td>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <input type="submit" value="등록">
+                    <input type="reset" value="취소">
+                </th>
+            </tr>
+        </table>
+    </form>
     <div id = "show"></div>
 </body>
 </html>

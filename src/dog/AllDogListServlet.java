@@ -20,6 +20,7 @@ public class AllDogListServlet extends HttpServlet {
 		super();
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
