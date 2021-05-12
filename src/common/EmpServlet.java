@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/empList.do") // 생성할 때만 '/'를 쓰고 내부나 다른 곳에서 불러올 때는 쓰면 안 된다.
 public class EmpServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //		super.doGet(req, resp); // doGet 방식 요청. Empservlet에 2개의 메서드 호출됨
