@@ -23,6 +23,32 @@ public class ModifyDogServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		response.setCharacterEncoding("UTF-8");
+		
+		DogVO vo = new DogVO();
+	
+		String dName = request.getParameter("petName");
+		String species = request.getParameter("species");
+		String age = request.getParameter("age");
+		String color = request.getParameter("color");
+		String dSize = request.getParameter("bodySize");
+		
+		vo.setPetName(dName);
+		vo.setSpecies(species);
+		vo.setAge(age);
+		vo.setColor(color);
+		vo.setBodySize(dSize);
+		
+		System.out.println(vo.toString());
+		
+		DogDAO dao = new DogDAO();
+		int modiResultCnt = dao.updateDog(vo);
+		
+		System.out.println("modify query result : " + modiResultCnt);
+		response.getWriter().print(modiResultCnt);
+		
+		response.sendRedirect("/WebProject/servletAlon/exer_alon_1.html");
+		
 	}
 
 }

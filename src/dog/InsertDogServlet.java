@@ -41,7 +41,7 @@ public class InsertDogServlet extends HttpServlet {
 		
 		System.out.println("query result : " + rsCnt);
 		
-		response.sendRedirect("/WebProject/exer_alone_1.html");
+		response.sendRedirect("/WebProject/servletAlone/exer_alone_1.html");
 		
 	}
 

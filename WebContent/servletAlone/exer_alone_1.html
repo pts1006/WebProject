@@ -19,21 +19,22 @@
                 url: '/WebProject/allDogListServlet',
                 dataType: 'json',
                 success:function(result){
-
+					
                 	let sTable = $('<table />').attr('border', '1');
                 	sTable.append(addTitle());
                 	
                 	for(let i = 0; i < result.length; i++){
                 		
                 		let tr = $('<tr />');
-                		let modifyBtn = $('<button onclick = "ModifyDog'+i+'" />').html('수정');
+                		let modifyBtn = $('<button onclick = "ModifyDog('+i+')" />').html('수정');
                 		
                 		tr.append(
                 			$('<td />').append($('<input type = text" disabled id = "dName'+i+'">').val(result[i].dName)),
                 			$('<td />').append($('<input type = text" id = "species'+i+'">').val(result[i].species)),
                 			$('<td />').append($('<input type = text" id = "age'+i+'">').val(result[i].age)),
                 			$('<td />').append($('<input type = text" id = "dColor'+i+'">').val(result[i].dColor)),
-                			$('<td />').append($('<input type = text" id = "dSize'+i+'">').val(result[i].dSize))
+                			$('<td />').append($('<input type = text" id = "dSize'+i+'">').val(result[i].dSize)),
+                			$('<td />').html(modifyBtn)
                 		);
                 		
                 		sTable.append(tr);
@@ -62,8 +63,9 @@
         };
         
         // 제출 버튼
-        $('#frm').submit(function(){
+        $('#frm').submit(function(e){
 
+        	e.preventDefault();
             let frm = document.getElementById('frm');
             let data = new FormData(frm);
 
@@ -74,7 +76,7 @@
                 type: 'post',
                 dataType: 'json',
                 data: data,
-                success: function (){
+                success: function (result){
                     window.alert('생성')
                 },
                 error: function (err){
@@ -84,12 +86,18 @@
         });
 
         // 수정 버튼 클릭 기능
-        function ModifyDog(){
+        function ModifyDog(index){
             console.log($("#dName"+index).val());
-            let data = {};
+            let data = {
+            		"dName" : $("#dName" +index).val(),
+            		"species" : $("#species" + index).val(),
+            		"dColor" : $("#color" + index).val(),
+            		"age" : $("#age" + index).val(),
+            		"dSize" : $("#dSize" + index).val()
+            };
 
             $.ajax({
-                url: '',
+                url: '/WebProject/modifyDogServlet',
                 data: data,
                 type: 'post',
                 dataType: 'json',
@@ -106,7 +114,7 @@
 </head>
 <body>
 
-    <form id = 'frm' action="/WebProject/insertDogServlet" method="get" enctype="multipart/form-data">	
+    <form id='frm' action="/WebProject/insertDogServlet" method="get" enctype="multipart/form-data">	
         <table border = "1">
             <caption>애완견 등록</caption>
             <tr>

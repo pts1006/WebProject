@@ -58,6 +58,8 @@ public class DogDAO {
 				vo.setAge(rs.getString("age"));
 				vo.setColor(rs.getString("color"));
 				vo.setBodySize(rs.getString("body_size"));
+				
+				list.add(vo);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -73,7 +75,7 @@ public class DogDAO {
 		
 		conn = DBCon.getConnect();
 		int result = 0;
-		String sql = "insert into user_temp values(?, ?, ?, ?, ?)";
+		String sql = "insert into exam_board values(?, ?, ?, ?, ?)";
 		
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -83,6 +85,14 @@ public class DogDAO {
 			psmt.setString(3, vo.getAge());
 			psmt.setString(4, vo.getColor());
 			psmt.setString(5, vo.getBodySize());
+			
+			result = psmt.executeUpdate();
+			
+			if(result != 0) {
+				System.out.println(result + "건 입력.");
+			} else {
+				System.out.println("입력 안 됨.");
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

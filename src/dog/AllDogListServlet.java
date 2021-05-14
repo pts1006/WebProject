@@ -33,11 +33,11 @@ public class AllDogListServlet extends HttpServlet {
 			
 			JSONObject obj = new JSONObject();
 			
-			obj.put("petName", vo.getPetName());
+			obj.put("dName", vo.getPetName());
 			obj.put("species", vo.getSpecies());
 			obj.put("age", vo.getAge());
-			obj.put("color", vo.getColor());
-			obj.put("bodySize", vo.getBodySize());
+			obj.put("dColor", vo.getColor());
+			obj.put("dSize", vo.getBodySize());
 			
 			ary.add(obj);
 			
