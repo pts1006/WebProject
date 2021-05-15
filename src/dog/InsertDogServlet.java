@@ -29,17 +29,17 @@ public class InsertDogServlet extends HttpServlet {
 		
 		DogVO vo = new DogVO();
 		vo.setPetName(dName);
-		vo.setSpecies(species);
 		vo.setAge(age);
 		vo.setColor(color);
 		vo.setBodySize(bSize);
+		vo.setSpecies(species);
 		
 		System.out.println("등록 데이터 확인 : " + vo.toString());
 		
 		DogDAO dao = new DogDAO();
 		int rsCnt = dao.insertDog(vo);
 		
-		System.out.println("query result : " + rsCnt);
+		System.out.println("insert query result : " + rsCnt);
 		
 		response.sendRedirect("/WebProject/servletAlone/exer_alone_1.html");
 		

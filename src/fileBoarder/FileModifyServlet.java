@@ -36,6 +36,8 @@ public class FileModifyServlet extends HttpServlet {
 		ServletContext sc = this.getServletContext();
 		String path = sc.getRealPath("upload");	// 서버상 경로.
 
+		System.out.println("경로 : "+ path);
+
 		// 파일 올리는 작업
 		MultipartRequest multi = 
 				new MultipartRequest(

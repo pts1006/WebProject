@@ -27,11 +27,11 @@ public class ModifyDogServlet extends HttpServlet {
 		
 		DogVO vo = new DogVO();
 	
-		String dName = request.getParameter("petName");
+		String dName = request.getParameter("dName");
 		String species = request.getParameter("species");
 		String age = request.getParameter("age");
-		String color = request.getParameter("color");
-		String dSize = request.getParameter("bodySize");
+		String color = request.getParameter("dColor");
+		String dSize = request.getParameter("dSize");
 		
 		vo.setPetName(dName);
 		vo.setSpecies(species);
@@ -47,7 +47,7 @@ public class ModifyDogServlet extends HttpServlet {
 		System.out.println("modify query result : " + modiResultCnt);
 		response.getWriter().print(modiResultCnt);
 		
-		response.sendRedirect("/WebProject/servletAlon/exer_alon_1.html");
+//		response.sendRedirect("/WebProject/servletAlon/exer_alon_1.html");
 		
 	}
 

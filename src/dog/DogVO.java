@@ -1,7 +1,6 @@
 package dog;
 
 public class DogVO {
-
 	private String species;
 	private String petName;
 	private String age;
