@@ -115,7 +115,7 @@ public class CatDAO {
 			if(result != 0) {
 				System.out.println(result + "건 수정.");
 			} else {
-				System.out.println("수정 실패.");				
+				System.out.println("수정 실패.");	
 			}
 			
 		} catch (SQLException e) {

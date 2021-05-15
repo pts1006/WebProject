@@ -20,7 +20,7 @@ public class DeleteCatServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		resp.setCharacterEncoding("UTF-8");
+//		resp.setCharacterEncoding("UTF-8");
 		
 		String cName = req.getParameter("cName");
 		

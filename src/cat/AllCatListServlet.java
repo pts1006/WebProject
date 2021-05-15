@@ -36,7 +36,7 @@ public class AllCatListServlet extends HttpServlet {
 			
 			JSONObject obj = new JSONObject();
 			
-			obj.put("cName", vo.getCatAge());
+			obj.put("cName", vo.getCatName());
 			obj.put("cSpecies", vo.getCatSpecies());
 			obj.put("cGender", vo.getCatGender());
 			obj.put("cAge", vo.getCatAge());

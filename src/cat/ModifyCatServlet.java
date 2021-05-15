@@ -41,6 +41,11 @@ public class ModifyCatServlet extends HttpServlet{
 		
 		System.out.println("modi query result : " + modiCnt);
 		
+		if(modiCnt > 0) {
+			resp.getWriter().print(modiCnt);
+		} else {
+			resp.sendError(404, "에러입니다.");
+		}
 	}
 	
 }

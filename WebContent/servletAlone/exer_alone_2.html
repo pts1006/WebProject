@@ -91,12 +91,11 @@
                 type : 'GET',
                 dataType : 'json',
                 data : data,
-                success : function (result) {
-                    console.log(result);
+                success : function () {
+                    window.alert("제출됨.");
                 },
-                error : function (err) {
-                    console.log(err);
-                    console.log(data);
+                error : function () {
+                    window.alert("제출 안 됨.");
                 }
             });
         };
@@ -117,11 +116,10 @@
                 type : 'post',
                 dataType : 'json',
                 success : function (){
-                	alert('수정.');
-                    history.go(-1);
+                    window.alert('수정.');
                 },
-                error : function (err){
-                    console.log(err);
+                error : function (){
+                    window.alert('안 됨.\n이름 값은 변경할 수 없음.');
                 }
             });
         };
@@ -130,8 +128,9 @@
         function deleteCat (index){
 
             let data = {"cName" : $("#cName" + index).val()};
-            let delTr = $("#sTr" + index).val();
+            let delTr = $("#sTr" + index);
             console.log(delTr);
+            console.log(data);
 
             $.ajax({
                 url : '/WebProject/deleteCat',
