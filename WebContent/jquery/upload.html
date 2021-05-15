@@ -107,6 +107,7 @@
 				e.preventDefault();
 				let number = $(this).parent().parent().children().eq(0).html();
 				let delTr = $(this).parent().parent();
+				console.log(delTr);
 
 				$.ajax({
 					url: '../fileDeleteServlet',

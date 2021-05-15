@@ -1,42 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>exer_alone_2</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <style>
+        #showDB {
+            padding-top: 10px;
+        }
+    </style>
+    <script>
+        // 화면에 출력
+        $(document).ready(function () {
+
+            $.ajax({
+                url: '/WebProject/allCat',
+                dataType: 'json',
+                success: function (resp) {
+
+                    let sTable = $('<table />').attr('border', '1');
+                    sTable.append(addTitle());
+
+                    for(let i = 0; i < resp.length; i++){
+
+                        let sTr = $('<tr id = "sTr'+i+'"/>');
+                        let modifyBtn = $('<button onclick = "modifyCat('+i+')" />').html('수정');
+                        let deleteBtn = $('<button onclick = "deleteCat('+i+')" />').html('삭제');
+                        deleteBtn.click(deleteCat);
+
+                        sTr.append(
+                            $('<td />').append($('<input type = "text" id = "cName'+i+'">').val(resp[i].cName)),
+                            $('<td />').append($('<input type = "text" id = "cSpecies'+i+'">').val(resp[i].cSpecies)),
+                            $('<td />').append($('<input type = "text" id = "cGender'+i+'">').val(resp[i].cGender)),
+                            $('<td />').append($('<input type = "number" id = "cAge'+i+'">').val(resp[i].cAge)),
+                            $('<td />').html(modifyBtn),
+                            $('<td />').html(deleteBtn)
+                        );
+
+                        sTable.append(sTr);
+                    }
+                    
+                    $('#showDB').append(sTable);
+                },
+                error: function (err) {
+                    console.err(err);
+                }
+            });
+        });
+
+        // 테이블 타이틀
+        function addTitle(){
+
+            let title = $('<tr />');
+
+            title.append(
+                $('<th />').html('이름'),
+                $('<th />').html('품종'),
+                $('<th />').html('성별'),
+                $('<th />').html('나이'),
+                $('<th />').html('수정'),
+                $('<th />').html('삭제')
+            );
+
+            return title;
+        };
+
+        // 제출 버튼
+        function submit(){
+           
+            let na = document.getElementsByName('cName')[0].value;
+            let sp = document.getElementsByName('cSpecies')[0].value;
+            let ge = document.getElementsByName('cGender')[0].value;
+            let ag = document.getElementsByName('cAge')[0].value;
+            
+            let data = {
+                "cName" : na,
+                "cSpecies" : sp,
+                "cGender" : ge,
+                "cAge" : ag
+            };
+
+            $.ajax({
+                //contentType : false,
+                //processData : false,
+                // 위 두 개, form에서 기능하는 건가 봄.
+                url : '/WebProject/insertCat',
+                type : 'GET',
+                dataType : 'json',
+                data : data,
+                success : function (result) {
+                    console.log(result);
+                },
+                error : function (err) {
+                    console.log(err);
+                    console.log(data);
+                }
+            });
+        };
+
+        // 수정 버튼
+        function modifyCat (index) {
+
+            let data = {
+                "cName" : $("#cName" + index).val(),
+                "cSpecies" : $("#cSpecies" + index).val(),
+                "cGender" : $("#cGender" + index).val(),
+                "cAge" : $("#cAge" + index).val()
+            };
+
+            $.ajax({
+                url : '/WebProject/modifyCat',
+                data : data,
+                type : 'post',
+                dataType : 'json',
+                success : function (){
+                	alert('수정.');
+                    history.go(-1);
+                },
+                error : function (err){
+                    console.log(err);
+                }
+            });
+        };
+
+        // 삭제 버튼
+        function deleteCat (index){
+
+            let data = {"cName" : $("#cName" + index).val()};
+            let delTr = $("#sTr" + index).val();
+            console.log(delTr);
+
+            $.ajax({
+                url : '/WebProject/deleteCat',
+                type : 'post',
+                data : 'data',
+                success : function(){
+                    alert('삭제');
+                    history.go(-1);
+                },
+                error : function(err) {
+                    console.log(err);
+                }
+            });
+        };
+    </script>
 </head>
+
 <body>
-    <table border = "1">
-        <caption>애완견 등록</caption>
-        <tr>
-            <td>이름</td>
-            <td><input type="text" name="dName"></td>
-        </tr>
-        <tr>
-            <td>품종</td>
-            <td><input type="text" name="species"></td>
-        </tr>
-        <tr>
-            <td>나이</td>
-            <td><input type="text" name="age"></td>
-        </tr>
-        <tr>
-            <td>색깔</td>
-            <td><input type="text" name="dColor"></td>
-        </tr>
-        <tr>
-            <td>크기</td>
-            <td><input type="text" name="dSize"></td>
-        </tr>
-        <tr>
-            <th colspan="2">
-                <input type="submit" value="등록">
-                <input type="reset" value="취소">
-            </th>
-        </tr>
-    </table>
-    <div id = "show"></div>
+    <div id="showTable">
+        <table border="1">
+            <caption>애완묘 등록</caption>
+            <tr>
+                <td>이름</td>
+                <td><input type="text" name="cName"></td>
+            </tr>
+            <tr>
+                <td>품종</td>
+                <td><input type="text" name="cSpecies"></td>
+            </tr>
+            <tr>
+                <td>성별</td>
+                <td>
+                    <input type="radio" name="cGender" value = "M" checked = "checked">수
+                    <input type="radio" name="cGender" value = "F">암
+                </td>
+            </tr>
+            <tr>
+                <td>나이</td>
+                <td><input type="number" name="cAge"></td>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <input type="submit" onclick = "submit()" value="등록">
+                    <input type="reset" value="취소">
+                </th>
+            </tr>
+        </table>
+    </div>
+    <div id = "showDB"></div>
 </body>
+
 </html>
