@@ -28,11 +28,13 @@ public class ModifyCatServlet extends HttpServlet{
 		String cSpecies = req.getParameter("cSpecies");
 		String cGender = req.getParameter("cGender");
 		String cAge = req.getParameter("cAge");
+		String cSlave = req.getParameter("cSlave");
 		
 		vo.setCatName(cName);
 		vo.setCatSpecies(cSpecies);
 		vo.setCatGender(cGender);
 		vo.setCatAge(Integer.parseInt(cAge));
+		vo.setCatSlave(cSlave);
 		
 		System.out.println("modify data : " + vo.toString());
 		
@@ -44,7 +46,7 @@ public class ModifyCatServlet extends HttpServlet{
 		if(modiCnt > 0) {
 			resp.getWriter().print(modiCnt);
 		} else {
-			resp.sendError(404, "에러입니다.");
+			resp.sendError(404, "에러입니다.");	// 기능하지 않음.
 		}
 	}
 	

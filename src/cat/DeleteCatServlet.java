@@ -22,10 +22,10 @@ public class DeleteCatServlet extends HttpServlet{
 		
 //		resp.setCharacterEncoding("UTF-8");
 		
-		String cName = req.getParameter("cName");
+		String cSlave = req.getParameter("cSlave");
 		
 		CatVO vo = new CatVO();
-		vo.setCatName(cName);
+		vo.setCatSlave(cSlave);
 		
 		System.out.println("delete data : " + vo.toString());
 		

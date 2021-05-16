@@ -43,6 +43,7 @@ public class CatDAO {
 				vo.setCatSpecies(rs.getString("cat_species"));
 				vo.setCatGender(rs.getString("cat_gender"));
 				vo.setCatAge(rs.getInt("cat_age"));
+				vo.setCatSlave(rs.getString("cat_slave"));
 				
 				list.add(vo);
 			}
@@ -61,7 +62,7 @@ public class CatDAO {
 		
 		int result = 0;
 		
-		String sql = "insert into exam_cat values(?, ?, ?, ?)";
+		String sql = "insert into exam_cat values(?, ?, ?, ?, ?)";
 		
 		try {
 			psmt = conn.prepareStatement(sql);
@@ -70,6 +71,7 @@ public class CatDAO {
 			psmt.setString(2, vo.getCatSpecies());
 			psmt.setString(3, vo.getCatGender());
 			psmt.setInt(4, vo.getCatAge());
+			psmt.setString(5, vo.getCatSlave());
 			
 			result = psmt.executeUpdate();
 			
@@ -97,18 +99,20 @@ public class CatDAO {
 		
 		String sql = "update exam_cat "
 				+ "set "
+				+ "cat_name = ?, "
 				+ "cat_species = ?, "
 				+ "cat_gender = ?, "
 				+ "cat_age = ? "
-				+ "where cat_name = ?";
+				+ "where cat_slave = ?";
 		
 		try {
 			psmt = conn.prepareStatement(sql);
 			
-			psmt.setString(1, vo.getCatSpecies());
-			psmt.setString(2, vo.getCatGender());
-			psmt.setInt(3, vo.getCatAge());
-			psmt.setString(4, vo.getCatName());
+			psmt.setString(1, vo.getCatName());
+			psmt.setString(2, vo.getCatSpecies());
+			psmt.setString(3, vo.getCatGender());
+			psmt.setInt(4, vo.getCatAge());
+			psmt.setString(5, vo.getCatSlave());
 			
 			result = psmt.executeUpdate();
 			
@@ -131,13 +135,13 @@ public class CatDAO {
 		
 		conn = DBCon.getConnect();
 		
-		String sql = "delete from exam_cat where cat_name = ?";
+		String sql = "delete from exam_cat where cat_slave = ?";
 		
 		int result = 0;
 		
 		try {
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, vo.getCatName());
+			psmt.setString(1, vo.getCatSlave());
 			
 			result = psmt.executeUpdate();
 			

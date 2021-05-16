@@ -9,6 +9,10 @@ import java.util.List;
 
 import common.DBCon;
 
+/*
+	/WebProject/WebContent/jquery/upload.html 시리즈.
+*/
+
 public class FileDAO {
 
 	Connection conn;

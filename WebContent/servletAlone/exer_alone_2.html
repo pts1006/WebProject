@@ -32,6 +32,7 @@
                         deleteBtn.click(deleteCat);
 
                         sTr.append(
+                            $('<td />').append($('<input type = "text" id = "cSlave'+i+'">').val(resp[i].cSlave)),
                             $('<td />').append($('<input type = "text" id = "cName'+i+'">').val(resp[i].cName)),
                             $('<td />').append($('<input type = "text" id = "cSpecies'+i+'">').val(resp[i].cSpecies)),
                             $('<td />').append($('<input type = "text" id = "cGender'+i+'">').val(resp[i].cGender)),
@@ -45,8 +46,8 @@
                     
                     $('#showDB').append(sTable);
                 },
-                error: function (err) {
-                    console.err(err);
+                error: function () {
+                    alert('err');
                 }
             });
         });
@@ -57,6 +58,7 @@
             let title = $('<tr />');
 
             title.append(
+            	$('<th />').html('주인 아이디'),
                 $('<th />').html('이름'),
                 $('<th />').html('품종'),
                 $('<th />').html('성별'),
@@ -71,12 +73,14 @@
         // 제출 버튼
         function submit(){
            
+        	let cs = document.getElementsByName('cSlave')[0].value;
             let na = document.getElementsByName('cName')[0].value;
             let sp = document.getElementsByName('cSpecies')[0].value;
             let ge = document.getElementsByName('cGender')[0].value;
             let ag = document.getElementsByName('cAge')[0].value;
             
             let data = {
+            	"cSlave" : cs,
                 "cName" : na,
                 "cSpecies" : sp,
                 "cGender" : ge,
@@ -92,10 +96,12 @@
                 dataType : 'json',
                 data : data,
                 success : function () {
-                    window.alert("제출됨.");
+                	alert("제출됨.");
+                	location.reload();
                 },
                 error : function () {
-                    window.alert("제출 안 됨.");
+                    alert("제출 안 됨.\n중복된 아이디 값.");
+                    location.reload();
                 }
             });
         };
@@ -104,6 +110,7 @@
         function modifyCat (index) {
 
             let data = {
+            	"cSlave" : $("#cSlave" + index).val(),
                 "cName" : $("#cName" + index).val(),
                 "cSpecies" : $("#cSpecies" + index).val(),
                 "cGender" : $("#cGender" + index).val(),
@@ -116,10 +123,12 @@
                 type : 'post',
                 dataType : 'json',
                 success : function (){
-                    window.alert('수정.');
+                    alert('수정.');
+                    location.reload();
                 },
                 error : function (){
-                    window.alert('안 됨.\n이름 값은 변경할 수 없음.');
+                    alert('안 됨.\n주인 값은 변경할 수 없음.');
+                    location.reload();
                 }
             });
         };
@@ -127,18 +136,19 @@
         // 삭제 버튼
         function deleteCat (index){
 
-            let data = {"cName" : $("#cName" + index).val()};
+            let data = { cSlave : $("#cSlave" + index).val() };
             let delTr = $("#sTr" + index);
-            console.log(delTr);
-            console.log(data);
-
+			console.log(delTr);
+			console.log(data);
+            
             $.ajax({
                 url : '/WebProject/deleteCat',
                 type : 'post',
-                data : 'data',
+                data : data,
                 success : function(){
+                	//delTr.remove();
                     alert('삭제');
-                    history.go(-1);
+                    location.reload();
                 },
                 error : function(err) {
                     console.log(err);
@@ -153,7 +163,11 @@
         <table border="1">
             <caption>애완묘 등록</caption>
             <tr>
-                <td>이름</td>
+                <td>주인 아이디</td>
+                <td><input type="text" name="cSlave"></td>
+            </tr>
+            <tr>
+                <td>고양이 이름</td>
                 <td><input type="text" name="cName"></td>
             </tr>
             <tr>

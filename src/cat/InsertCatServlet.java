@@ -25,12 +25,14 @@ public class InsertCatServlet extends HttpServlet {
 		String cSpecies = req.getParameter("cSpecies");
 		String cGender = req.getParameter("cGender");
 		String cAge = req.getParameter("cAge");
+		String cSlave = req.getParameter("cSlave");
 		
 		CatVO vo = new CatVO();
 		vo.setCatName(cName);
 		vo.setCatSpecies(cSpecies);
 		vo.setCatGender(cGender);
 		vo.setCatAge(Integer.parseInt(cAge));
+		vo.setCatSlave(cSlave);
 		
 		System.out.println("insert result : " + vo.toString());
 		
@@ -39,7 +41,11 @@ public class InsertCatServlet extends HttpServlet {
 		
 		System.out.println("insert query result : " + insertCnt);
 		
-		resp.sendRedirect("/WebProject/servletAlone/exer_alone_2.html");
+		if(insertCnt != 0) {
+			resp.getWriter().print(insertCnt);
+		} else {
+			resp.sendError(302, "중복된 값이 있습니다.");	// 기능하지 않음.
+		}
 		
 	}
 }

@@ -6,6 +6,15 @@ public class CatVO {
 	private String catSpecies;
 	private String catGender;
 	private int catAge;
+	private String catSlave;
+
+	public String getCatSlave() {
+		return catSlave;
+	}
+
+	public void setCatSlave(String catSlave) {
+		this.catSlave = catSlave;
+	}
 
 	public void setCatName(String catName) {
 		this.catName = catName;
@@ -41,8 +50,8 @@ public class CatVO {
 
 	@Override
 	public String toString() {
-		return "CatVO " + "[catName=" + catName + ", " + "catSpecies=" + catSpecies + ", " + "catGender=" + catGender
-				+ ", " + "catAge=" + catAge + "]";
+		return "CatVO [catName=" + catName + ", catSpecies=" + catSpecies + ", catGender=" + catGender + ", catAge="
+				+ catAge + ", catSlave=" + catSlave + "]";
 	}
 
 }

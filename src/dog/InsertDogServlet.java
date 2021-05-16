@@ -42,6 +42,7 @@ public class InsertDogServlet extends HttpServlet {
 		System.out.println("insert query result : " + rsCnt);
 		
 		response.sendRedirect("/WebProject/servletAlone/exer_alone_1.html");
+		// form 태그에서만 기능하는 건가? cat에서는 안 먹네? lacation.reload()로 대체함.
 		
 	}
 
