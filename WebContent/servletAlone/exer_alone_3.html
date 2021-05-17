@@ -11,16 +11,33 @@
     	$(document).ready(function(){
     		
     		$.ajax({
-    			url : '',
-    			dataType : '',
+    			url : '/WebProject/allUser',
+    			dataType : 'json',
     			success : function(result){
     				
     				let uTable = $('<table />').attr('border', '1');
-    				uTable.append(addTitle);
+    				uTable.append(addTitle());
     				
     				for(let i = 0; result.length; i++){
     					
+    					let uTr = $('<tr id = "uTr'+i+'"/>');
+    					let modiBtn = $('<button on = "userModi('+i+')" />').html('수정');
+    					let deleteBtn = $('<button on = "userdelete('+i+')" />').html('삭제');
+    					
+    					uTr.append(
+    						$('<td />').append($('<input type = "number" id = "uId">').val(result[i].userId)),
+    						$('<td />').append($('<input type = "text" id = "uName">').val(result[i].userName)),
+    						$('<td />').append($('<input type = "text" id = "species">').val(result[i].species)),
+    						$('<td />').append($('<input type = "text" id = "gender">').val(result[i].gender)),
+    						$('<td />').append($('<input type = "number" id = "age">').val(result[i].age)),
+    						$('<td />').html(modiBtn),
+    						$('<td />').html(deleteBtn)
+    					);
+    					
+    					uTable.append(uTr);
     				}
+    				
+    				$('#show').append(uTable);
     			},
     			error : function(err){
     				console.log(err);
@@ -30,6 +47,7 @@
     	
     	// 테이블 제목
     	function addTitle(){
+    		
     		let uTitle = $("<tr />");
     		uTitle.append(
     				$("<th />").html("번호"),
@@ -41,15 +59,23 @@
     		return uTitle;
     	};
     	
+    	
     	// 기능 1 : 테이블 내용 수정
-    	function userModi(){
+    	function userModi(index){
     		
-    		let data = {};
+    		let data = {
+    			"uId" : $("#uId" + index).val(),
+    			"uName" : $("#uName" + index).val(),
+    			"species" : $("#species" + index).val(),
+    			"gender" : $("#gender" + index).val(),
+    			"age" : $("#age" + index).val()
+    		};
     		
     		$.ajax({
-    			url : 'WebProject/modifyUser',
+    			url : '/WebProject/modifyUser',
     			type : 'post',
     			data : data,
+    			dataType : 'json',
     			success : function(){
     				alert('수정됨.');
     				location.reload();
@@ -64,8 +90,8 @@
     	// 기능 2 : 테이블 tr 및 내용 삭제
     	function userDelete (){
     		
-    		let data = {};
-    		let btn = $(this);
+    		let data = { "uId" : $("#uId" + index).val() };
+    		let btn = $("#uTr" + index);
     		
     		$.ajax({
     			url : '/WebProject/deleteUser',
@@ -83,32 +109,31 @@
     </script>
 </head>
 <body>
-	<form id = "frm" action = "/WebProject/inserUser" method = "get">
+	<form id = "frm" action = "/WebProject/insertUser" method = "get">
     <table border = "1">
         <caption>유저 등록</caption>
         <tr>
             <td>번호</td>
-            <td><input type="number" name="dName"></td>
-        </tr>
-        <tr>
-            <td>아이디</td>
-            <td><input type="text" name="species"></td>
+            <td><input type="number" name="userId"></td>
         </tr>
         <tr>
             <td>이름</td>
-            <td><input type="text" name="age"></td>
+            <td><input type="text" name="userName"></td>
         </tr>
         <tr>
             <td>인종</td>
-            <td><input type="text" name="dColor"></td>
+            <td><input type="text" name="species"></td>
         </tr>
         <tr>
             <td>성별</td>
-            <td><input type="text" name="dSize"></td>
+            <td>
+            	<input type="radio" name="gender" value = "M" checked = "checked">남
+            	<input type="radio" name="gender" value = "F">녀
+            </td>
         </tr>
         <tr>
             <td>나이</td>
-            <td><input type="number" name="dSize"></td>
+            <td><input type="number" name="age"></td>
         </tr>
         <tr>
             <th colspan="2">
