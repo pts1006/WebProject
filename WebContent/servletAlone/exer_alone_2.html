@@ -29,7 +29,7 @@
                         let sTr = $('<tr id = "sTr'+i+'"/>');
                         let modifyBtn = $('<button onclick = "modifyCat('+i+')" />').html('수정');
                         let deleteBtn = $('<button onclick = "deleteCat('+i+')" />').html('삭제');
-                        deleteBtn.click(deleteCat);
+                        //deleteBtn.click(deleteCat);
 
                         sTr.append(
                             $('<td />').append($('<input type = "text" id = "cSlave'+i+'">').val(resp[i].cSlave)),
@@ -135,11 +135,9 @@
 
         // 삭제 버튼
         function deleteCat (index){
-
-            let data = { cSlave : $("#cSlave" + index).val() };
+        	
+            let data = { "cSlave" : $("#cSlave" + index).val() };
             let delTr = $("#sTr" + index);
-			console.log(delTr);
-			console.log(data);
             
             $.ajax({
                 url : '/WebProject/deleteCat',
