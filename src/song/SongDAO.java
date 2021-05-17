@@ -1,4 +1,4 @@
-package user;
+package song;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InfoDAO {
-
+public class SongDAO {
+	
 	Connection conn;
 	PreparedStatement psmt;
 	ResultSet rs;
@@ -24,26 +24,25 @@ public class InfoDAO {
 		}
 	}
 
-	// 전체 조회
-	public List<InfoVO> allUserList(){
+	public List<SongVO> allSongList() {
 		
 		conn = DBCon.getConnect();
 		
-		String sql = "select * from exam_info";
+		String sql = "select * from exam_song";
 		
-		List<InfoVO> list = new ArrayList<>();
+		List<SongVO> list = new ArrayList<>();
 		
 		try {
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			
 			while(rs.next()) {
-				InfoVO vo = new InfoVO();
-				vo.setUserId(rs.getInt("user_id"));
-				vo.setUserName(rs.getString("user_name"));
-				vo.setUserSpecies(rs.getString("user_species"));
-				vo.setUserGender(rs.getString("user_gender"));
-				vo.setUserAge(rs.getInt("user_age"));
+				SongVO vo = new SongVO();
+				vo.setSongCode(rs.getString("song_code"));
+				vo.setSongTitle(rs.getString("song_title"));
+				vo.setVocal(rs.getString("vocal"));
+				vo.setComposer(rs.getString("composer"));
+				vo.setGenre(rs.getString("genre"));
 				
 				list.add(vo);
 			}
@@ -52,31 +51,65 @@ public class InfoDAO {
 		} finally {
 			close();
 		}
+		
 		return list;
 	}
 
-	// 삽입 기능
-	public int insertUser(InfoVO vo) {
-
+	public int deleteSong(SongVO vo) {
+		
 		conn = DBCon.getConnect();
-
-		String sql = "insert into exam_info values(?, ?, ?, ?, ?)";
-
+		
+		String sql = "delete from exam_song where song_code =?";
+		
 		int result = 0;
-
+		
 		try {
 			psmt = conn.prepareStatement(sql);
-			
-			psmt.setInt(1, vo.getUserId());
-			psmt.setString(2, vo.getUserName());
-			psmt.setString(3, vo.getUserSpecies());
-			psmt.setString(4, vo.getUserGender());
-			psmt.setInt(5, vo.getUserAge());
+			psmt.setString(1, vo.getSongCode());
 			
 			result = psmt.executeUpdate();
 			
 			if(result != 0) {
-				System.out.println(result + "건 입력.");
+				System.out.println("삭제ㅇㅇ");
+			} else {
+				System.out.println("ㄴㄴ");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+		return result;
+	}
+
+	public int modifySong(SongVO vo) {
+		
+		conn = DBCon.getConnect();
+		
+		int result = 0;
+		
+		String sql = "update exam_song "
+				+ "set "
+				+ "song_title =?, "
+				+ "vocal = ?, "
+				+ "composer = ?, "
+				+ "genre = ? "
+				+ "where song_code = ?";
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1, vo.getSongTitle());
+			psmt.setString(2, vo.getVocal());
+			psmt.setString(3, vo.getComposer());
+			psmt.setString(4, vo.getGenre());
+			psmt.setString(5, vo.getSongCode());
+			
+			result = psmt.executeUpdate();
+			
+			if(result != 0) {
+				System.out.println("수정ㅇㅇ");
 			} else {
 				System.out.println("ㄴㄴ");
 			}
@@ -86,32 +119,31 @@ public class InfoDAO {
 		} finally {
 			close();
 		}
-
+		
 		return result;
 	}
 
-	// 수정 기능
-	public int modifyUser(InfoVO vo) {
-
+	public int insertSong(SongVO vo) {
+		
 		conn = DBCon.getConnect();
-
-		String sql = "update exam_info set user_name =?, user_species =?, user_gender = ?, user_age =? where user_id = ?";
-
+		
 		int result = 0;
-
+		
+		String sql = "insert into exam_song values (?, ?, ?, ?, ?)";
+		
 		try {
 			psmt = conn.prepareStatement(sql);
 			
-			psmt.setString(1, vo.getUserName());
-			psmt.setString(2, vo.getUserSpecies());
-			psmt.setString(3, vo.getUserGender());
-			psmt.setInt(4, vo.getUserAge());
-			psmt.setInt(5, vo.getUserId());
+			psmt.setString(1, vo.getSongCode());
+			psmt.setString(2, vo.getSongTitle());
+			psmt.setString(3,vo.getVocal());
+			psmt.setString(4, vo.getComposer());
+			psmt.setString(5, vo.getGenre());
 			
 			result = psmt.executeUpdate();
 			
 			if(result != 0) {
-				System.out.println(result + "건 수정.");
+				System.out.println("입력ㅇㅇ");
 			} else {
 				System.out.println("ㄴㄴ");
 			}
@@ -120,37 +152,7 @@ public class InfoDAO {
 		} finally {
 			close();
 		}
-
-		return result;
-	}
-	
-	// 삭제 기능
-	public int deleteUser(InfoVO vo) {
-
-		conn = DBCon.getConnect();
-
-		String sql = "delete from exam_info where user_id = ?";
-
-		int result = 0;
-
-		try {
-			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, vo.getUserId());
-			
-			result = psmt.executeUpdate();
-			
-			if(result != 0) {
-				System.out.println(result +"건 삭제.");
-			} else {
-				System.out.println("ㄴㄴ.");
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-
+		
 		return result;
 	}
 

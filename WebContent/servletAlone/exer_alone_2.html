@@ -26,7 +26,7 @@
 
                     for(let i = 0; i < resp.length; i++){
 
-                        let sTr = $('<tr id = "sTr'+i+'"/>');
+                        let sTr = $('<tr />');
                         let modifyBtn = $('<button onclick = "modifyCat('+i+')" />').html('수정');
                         let deleteBtn = $('<button onclick = "deleteCat('+i+')" />').html('삭제');
                         //deleteBtn.click(deleteCat);
@@ -157,40 +157,38 @@
 </head>
 
 <body>
-    <div id="showTable">
-        <table border="1">
-            <caption>애완묘 등록</caption>
-            <tr>
-                <td>주인 아이디</td>
-                <td><input type="text" name="cSlave"></td>
-            </tr>
-            <tr>
-                <td>고양이 이름</td>
-                <td><input type="text" name="cName"></td>
-            </tr>
-            <tr>
-                <td>품종</td>
-                <td><input type="text" name="cSpecies"></td>
-            </tr>
-            <tr>
-                <td>성별</td>
-                <td>
-                    <input type="radio" name="cGender" value = "M" checked = "checked">수
-                    <input type="radio" name="cGender" value = "F">암
-                </td>
-            </tr>
-            <tr>
-                <td>나이</td>
-                <td><input type="number" name="cAge"></td>
-            </tr>
-            <tr>
-                <th colspan="2">
-                    <input type="submit" onclick = "submit()" value="등록">
-                    <input type="reset" value="취소">
-                </th>
-            </tr>
-        </table>
-    </div>
+    <table border="1">
+        <caption>애완묘 등록</caption>
+        <tr>
+            <td>주인 아이디</td>
+            <td><input type="text" name="cSlave"></td>
+        </tr>
+        <tr>
+            <td>고양이 이름</td>
+            <td><input type="text" name="cName"></td>
+        </tr>
+        <tr>
+            <td>품종</td>
+            <td><input type="text" name="cSpecies"></td>
+        </tr>
+        <tr>
+            <td>성별</td>
+            <td>
+                <input type="radio" name="cGender" value = "M" checked = "checked">수
+                <input type="radio" name="cGender" value = "F">암
+            </td>
+        </tr>
+        <tr>
+            <td>나이</td>
+            <td><input type="number" name="cAge"></td>
+        </tr>
+        <tr>
+            <th colspan="2">
+                <input type="submit" onclick = "submit()" value="등록">
+                <input type="reset" value="취소">
+            </th>
+        </tr>
+    </table>
     <div id = "showDB"></div>
 </body>
 

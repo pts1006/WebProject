@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>exer_alone_3</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <style>
+    	#show {
+    		padding-top : 10px;
+    	}
+    </style>
     <script>
     	// 입력된 테이블 정보 출력
     	$(document).ready(function(){
@@ -18,19 +23,19 @@
     				let uTable = $('<table />').attr('border', '1');
     				uTable.append(addTitle());
     				
-    				for(let i = 0; result.length; i++){
+    				for(let i = 0; i < result.length; i++){
     					
-    					let uTr = $('<tr id = "uTr'+i+'"/>');
-    					let modiBtn = $('<button on = "userModi('+i+')" />').html('수정');
-    					let deleteBtn = $('<button on = "userdelete('+i+')" />').html('삭제');
+    					let uTr = $('<tr />');
+    					let modifyBtn = $('<button onclick = "userModify('+i+')" />').html('수정');
+    					let deleteBtn = $('<button onclick = "userDelete('+i+')" />').html('삭제');
     					
     					uTr.append(
-    						$('<td />').append($('<input type = "number" id = "uId">').val(result[i].userId)),
-    						$('<td />').append($('<input type = "text" id = "uName">').val(result[i].userName)),
-    						$('<td />').append($('<input type = "text" id = "species">').val(result[i].species)),
-    						$('<td />').append($('<input type = "text" id = "gender">').val(result[i].gender)),
-    						$('<td />').append($('<input type = "number" id = "age">').val(result[i].age)),
-    						$('<td />').html(modiBtn),
+    						$('<td />').append($('<input type = "number" disabled id = "uId'+i+'">').val(result[i].userId)),
+    						$('<td />').append($('<input type = "text" id = "uName'+i+'">').val(result[i].userName)),
+    						$('<td />').append($('<input type = "text" id = "species'+i+'">').val(result[i].species)),
+    						$('<td />').append($('<input type = "text" id = "gender'+i+'">').val(result[i].gender)),
+    						$('<td />').append($('<input type = "number" id = "age'+i+'">').val(result[i].age)),
+    						$('<td />').html(modifyBtn),
     						$('<td />').html(deleteBtn)
     					);
     					
@@ -39,8 +44,8 @@
     				
     				$('#show').append(uTable);
     			},
-    			error : function(err){
-    				console.log(err);
+    			error : function(){
+    				alert('err');
     			}
     		});
     	});
@@ -49,19 +54,22 @@
     	function addTitle(){
     		
     		let uTitle = $("<tr />");
+    		
     		uTitle.append(
-    				$("<th />").html("번호"),
-    				$("<th />").html("이름"),
-    				$("<th />").html("인종"),
-    				$("<th />").html("성별"),
-    				$("<th />").html("나이")
+    			$("<th />").html("번호"),
+    			$("<th />").html("이름"),
+    			$("<th />").html("인종"),
+    			$("<th />").html("성별"),
+    			$("<th />").html("나이"),
+    			$("<th />").html("수정"),
+    			$("<th />").html("삭제")
     		);
+    		
     		return uTitle;
     	};
     	
-    	
     	// 기능 1 : 테이블 내용 수정
-    	function userModi(index){
+    	function userModify(index){
     		
     		let data = {
     			"uId" : $("#uId" + index).val(),
@@ -84,21 +92,20 @@
     				console.log(err);
     			}
     		});
-    	}
-    	
+    	}    	
     	
     	// 기능 2 : 테이블 tr 및 내용 삭제
-    	function userDelete (){
+    	function userDelete (index){
     		
     		let data = { "uId" : $("#uId" + index).val() };
-    		let btn = $("#uTr" + index);
+    		// let btn = $("#uTr" + index);
     		
     		$.ajax({
     			url : '/WebProject/deleteUser',
     			type : 'post',
     			data : data,
     			success : function(){
-    				alert('수정됨.');
+    				alert('삭제됨.');
     				location.reload();
     			},
     			error : function(err){
@@ -109,39 +116,44 @@
     </script>
 </head>
 <body>
-	<form id = "frm" action = "/WebProject/insertUser" method = "get">
-    <table border = "1">
-        <caption>유저 등록</caption>
-        <tr>
-            <td>번호</td>
-            <td><input type="number" name="userId"></td>
-        </tr>
-        <tr>
-            <td>이름</td>
-            <td><input type="text" name="userName"></td>
-        </tr>
-        <tr>
-            <td>인종</td>
-            <td><input type="text" name="species"></td>
-        </tr>
-        <tr>
-            <td>성별</td>
-            <td>
-            	<input type="radio" name="gender" value = "M" checked = "checked">남
-            	<input type="radio" name="gender" value = "F">녀
-            </td>
-        </tr>
-        <tr>
-            <td>나이</td>
-            <td><input type="number" name="age"></td>
-        </tr>
-        <tr>
-            <th colspan="2">
-                <input type="submit" value="등록">
-                <input type="reset" value="취소">
-            </th>
-        </tr>
-    </table>
+	<form action="/WebProject/insertUser" method ="get">
+	<!-- 폼 태그 쓰니까 제출 결과에 대한 윈도우 창을 부를 수가 없네? -->
+    	<table border = "1">
+        	<caption>유저 등록</caption>
+        	<tr>
+            	<td>번호</td>
+            	<td><input type="number" name="userId"></td>
+        	</tr>
+       		<tr>
+            	<td>이름</td>
+            	<td><input type="text" name="userName"></td>
+        	</tr>
+        	<tr>
+            	<td>인종</td>
+            	<td>
+            		<input type="radio" name="species" value = "black" checked = "checked">흑인
+            		<input type="radio" name="species" value = "white">백인
+            		<input type="radio" name="species" value = "yello">황인
+            	</td>
+        	</tr>
+        	<tr>
+            	<td>성별</td>
+            	<td>
+            		<input type="radio" name="gender" value = "M" checked = "checked">남
+            		<input type="radio" name="gender" value = "F">녀
+            	</td>
+        	</tr>
+        	<tr>
+            	<td>나이</td>
+            	<td><input type="number" name="age"></td>
+        	</tr>
+        	<tr>
+            	<th colspan="2">
+                	<input type="submit" value="등록">
+                	<input type="reset" value="취소">
+            	</th>
+        	</tr>
+    	</table>
     </form>
     <div id = "show"></div>
 </body>

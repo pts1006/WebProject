@@ -35,8 +35,8 @@ public class AllUserListServlet extends HttpServlet {
 			
 			JSONObject obj = new JSONObject();
 			
-			obj.put("uId", vo.getUserId());
-			obj.put("uName", vo.getUserName());
+			obj.put("userId", vo.getUserId());
+			obj.put("userName", vo.getUserName());
 			obj.put("species", vo.getUserSpecies());
 			obj.put("gender", vo.getUserGender());
 			obj.put("age", vo.getUserAge());

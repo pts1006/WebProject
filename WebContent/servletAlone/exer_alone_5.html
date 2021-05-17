@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,36 +8,164 @@
     <title>exer_alone_5</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 </head>
+<style>
+    #show {
+        padding-top : 10px;
+    }
+</style>
+<script>
+    // 전체 출력
+    $(document).ready(function(){
+
+        $.ajax({
+            url : 'WebProject/allBook',
+            dataType : 'json',
+            success : function(result){
+
+                let sTable = $('<table />').attr('border', '1');
+                sTable.append(addTitle());
+
+                for(let i = 0; i < result.length; i++){
+
+                    let sTr = $('<tr id = "sTr'+i+'" />');
+                    let modifyBtn = $('<button onclick = "modifyBook('+i+')" />').html('수정');
+                    let deleteBtn = $('<button onclick = "deleteBook('+i+')" />').html('삭제');
+
+                    sTr.append(
+                        $('<td />').append($('<input type = "number" disabled id = "bCode'+i+'">').val(result[i].bCode)),
+                        $('<td />').append($('<input type = "text" id = "bTitle'+i+'">').val(result[i].bTitle)),
+                        $('<td />').append($('<input type = "text" id = "author'+i+'">').val(result[i].author)),
+                        $('<td />').append($('<input type = "text" id = "genre'+i+'">').val(result[i].genre)),
+                        $('<td />').html(modifyBtn),
+                        $('<td />').html(deleteBtn)
+                    );
+
+                    sTable.append(sTr);
+                }
+
+                $('#show').append(sTable);
+            },
+            error : function(err){
+                console.log(err);
+            }
+        });
+    });
+
+    // 테이블 제목
+    function addTitle(){
+
+        let sTitle = $('<tr />');
+
+        sTitle.append(
+            $('<th />').html('책 번호'),
+            $('<th />').html('제목'),
+            $('<th />').html('저자'),
+            $('<th />').html('장르')
+        );
+
+        return sTitle;
+    }
+    // 제출
+    function submit(){
+
+        let bc = document.getElementsByName('bCode')[0].value;
+        let bt = document.getElementsByName('bTitle')[0].value;
+        let au = document.getElementsByName('author')[0].value;
+        let ge = document.getElementsByName('genre')[0].value;
+
+        let data = {
+            "bCode" : bc,
+            "btitle" : bt,
+            "author" : au,
+            "genre" : ge
+        };
+
+        $.ajax({
+            url : 'WebProject/insertBook',
+            data : data,
+            dataType : 'json',
+            type : 'post',
+            success : function(){
+                alert("제출됨.");
+                location.reload();
+            },
+            error : function(){
+                alert("제출 안 됨.\n중복된 코드 값")
+                location.reload();
+            }
+        });
+    }
+
+    // 수정
+    function modifyBook(index){
+        
+        let data = {
+            "bCode" : $("#bCode" + index).val(),
+            "btitle" : $("#bTitle" + index).val(),
+            "author" : $("#author" + index).val(),
+            "genre" : $("#genre" + index).val()
+        };
+
+        $.ajax({
+            url : 'WebProject/modifyBook',
+            data : data,
+            dataType : 'json',
+            type : 'post',
+            success : function(){
+                alert('수정됨.');
+                location.reload();
+            },
+            error : function(err){
+                console.log(err);
+            }
+        });
+    }
+    // 삭제
+    function deleteBook(index){
+
+        let data = { "bCode" : $("#bCode" + index).val() };
+
+        $.ajax({
+            url : '/WebProject/deleteBook',
+            type : 'post',
+            data : data,
+            dataType : 'json',
+            success : function(){
+                alert('삭제됨.');
+                location.reload();
+            },
+            error : function(err){
+                console.log(err);
+            }
+        });
+    }
+</script>
 <body>
-    <table border = "1">
-        <caption>애완견 등록</caption>
+    <table border="1">
+        <caption>책 등록</caption>
         <tr>
-            <td>이름</td>
-            <td><input type="text" name="dName"></td>
+            <td>책 번호</td>
+            <td><input type="number" name="bCode"></td>
         </tr>
         <tr>
-            <td>품종</td>
-            <td><input type="text" name="species"></td>
+            <td>책 이름</td>
+            <td><input type="text" name="bTitle"></td>
         </tr>
         <tr>
-            <td>나이</td>
-            <td><input type="text" name="age"></td>
+            <td>저자</td>
+            <td><input type="text" name="author"></td>
         </tr>
         <tr>
-            <td>색깔</td>
-            <td><input type="text" name="dColor"></td>
-        </tr>
-        <tr>
-            <td>크기</td>
-            <td><input type="text" name="dSize"></td>
+            <td>장르</td>
+            <td><input type="text" name="genre"></td>
         </tr>
         <tr>
             <th colspan="2">
-                <input type="submit" value="등록">
+                <input type="submit" onclick = "submit()" value="등록">
                 <input type="reset" value="취소">
             </th>
         </tr>
     </table>
-    <div id = "show"></div>
+    <div id="show"></div>
 </body>
 </html>

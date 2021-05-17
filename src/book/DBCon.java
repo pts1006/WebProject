@@ -1,4 +1,4 @@
-package user;
+package book;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,8 +15,7 @@ public class DBCon {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return conn;
+		
 	}
-	
 }

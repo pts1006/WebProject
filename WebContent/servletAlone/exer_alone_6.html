@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,36 +8,50 @@
     <title>exer_alone_6</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 </head>
+<style>
+    #show {
+        padding-top: 10px;
+    }
+</style>
+<script>
+    // 전체 출력
+
+    // 테이블 제목
+
+    // 제출
+
+    // 수정
+
+    // 삭제
+</script>
+
 <body>
-    <table border = "1">
-        <caption>애완견 등록</caption>
+    <table border="1">
+        <caption>책 등록</caption>
         <tr>
-            <td>이름</td>
-            <td><input type="text" name="dName"></td>
+            <td>책 번호</td>
+            <td><input type="number" name="bCode"></td>
         </tr>
         <tr>
-            <td>품종</td>
-            <td><input type="text" name="species"></td>
+            <td>책 이름</td>
+            <td><input type="text" name="bTitle"></td>
         </tr>
         <tr>
-            <td>나이</td>
-            <td><input type="text" name="age"></td>
+            <td>저자</td>
+            <td><input type="text" name="author"></td>
         </tr>
         <tr>
-            <td>색깔</td>
-            <td><input type="text" name="dColor"></td>
-        </tr>
-        <tr>
-            <td>크기</td>
-            <td><input type="text" name="dSize"></td>
+            <td>장르</td>
+            <td><input type="text" name="genre"></td>
         </tr>
         <tr>
             <th colspan="2">
-                <input type="submit" value="등록">
+                <input type="submit" onclick="submit()" value="등록">
                 <input type="reset" value="취소">
             </th>
         </tr>
     </table>
-    <div id = "show"></div>
+    <div id="show"></div>
 </body>
+
 </html>

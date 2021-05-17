@@ -1,42 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>exer_alone_4</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <style>
+        #show {
+            padding-top: 10px;
+        }
+    </style>
+
+    <script>
+        // 디비 테이블 출력
+        $(document).ready(function(){
+
+            $.ajax({
+                url : '/WebProject/allSong',
+                dataType : 'json',
+                success : function(resp){
+
+                    let sTable = $('<table />').attr('border', '1');
+                    sTable.append(addTableTitle());
+
+                    for(let i = 0; i < resp.length; i++){
+
+                        let sTr = $('<tr />');
+                        let modifyBtn = $('<button onclick = "modifySong('+i+')" />').html('수정');
+                        let deleteBtn = $('<button onclick = "deleteSong('+i+')" />').html('삭제');
+
+                        sTr.append(
+                            $('<td />').append($('<input type = "number" disabled id = "songCode'+i+'">').val(resp[i].songCode)),
+                            $('<td />').append($('<input type = "text" id = "songTitle'+i+'">').val(resp[i].songTitle)),
+                            $('<td />').append($('<input type = "text" id = "vocal'+i+'">').val(resp[i].vocal)),
+                            $('<td />').append($('<input type = "text" id = "composer'+i+'">').val(resp[i].composer)),
+                            $('<td />').append($('<input type = "text" id = "genre'+i+'">').val(resp[i].genre)),
+                            $('<td />').html(modifyBtn),
+                            $('<td />').html(deleteBtn)
+                        );
+
+                        sTable.append(sTr);
+                    }
+
+                    $('#show').append(sTable);
+                },
+                error : function(err){
+                    console.log(err);
+                }
+            });
+        });
+
+        // 테이블 제목
+        function addTableTitle(){
+
+            let sTitle = $("<tr />");
+
+            sTitle.append(
+                $("<th />").html("곡 번호"),
+                $("<th />").html("제목"),
+                $("<th />").html("가수"),
+                $("<th />").html("작곡"),
+                $("<th />").html("장르"),
+                $("<th />").html("수정"),
+                $("<th />").html("삭제")
+            );
+
+            return sTitle;
+        }
+
+        // 기능 1 : 테이블 행 내용 수정
+        function modifySong(index){
+
+            let data = {
+                "songCode" : $("#songCode" + index).val(),
+                "songTitle" : $("#songTitle" + index).val(),
+                "vocal" : $("#vocal" + index).val(),
+                "composer" : $("#composer" + index).val(),
+                "genre" : $("#genre" + index).val()
+            };
+
+            $.ajxa({
+                url : '/WebProject/modifySong',
+                data : data,
+                type : 'post',
+                dataType : 'json',
+                success : function(){
+                    alert('수정됨.');
+                    location.reload();
+                },
+                error : function(err){
+                    console.log(err);
+                }
+            });
+        }
+
+        // 기능 2 : 테이블 행 및 내용 삭제
+        function deleteSong(index){
+
+            let data = { "songCode" : $("#songCode" + index).val() };
+            // let btn = $("#sTr" + index);
+
+            $.ajax({
+                url : '/WebProject/deleteSong',
+                data : data,
+                type : 'post',
+                dataType : 'json',
+                success : function(){
+                    alert('삭제됨.');
+                    location.reload();
+                },
+                error : function(err){
+                    console.log(err);
+                }
+            });
+        }
+    </script>
 </head>
 <body>
-    <table border = "1">
-        <caption>애완견 등록</caption>
-        <tr>
-            <td>이름</td>
-            <td><input type="text" name="dName"></td>
-        </tr>
-        <tr>
-            <td>품종</td>
-            <td><input type="text" name="species"></td>
-        </tr>
-        <tr>
-            <td>나이</td>
-            <td><input type="text" name="age"></td>
-        </tr>
-        <tr>
-            <td>색깔</td>
-            <td><input type="text" name="dColor"></td>
-        </tr>
-        <tr>
-            <td>크기</td>
-            <td><input type="text" name="dSize"></td>
-        </tr>
-        <tr>
-            <th colspan="2">
-                <input type="submit" value="등록">
-                <input type="reset" value="취소">
-            </th>
-        </tr>
-    </table>
-    <div id = "show"></div>
+    <form action = "/WebProject/insertSong">
+        <table border="1">
+            <caption>노래 등록</caption>
+            <tr>
+                <td>곡 번호</td>
+                <td><input type="number" name="songCode"></td>
+            </tr>
+            <tr>
+                <td>제목</td>
+                <td><input type="text" name="songTitle"></td>
+            </tr>
+            <tr>
+                <td>가수</td>
+                <td><input type="text" name="vocal"></td>
+            </tr>
+            <tr>
+                <td>작곡</td>
+                <td><input type="text" name="composer"></td>
+            </tr>
+            <tr>
+                <td>장르</td>
+                <td>
+                    <input type="radio" name="genre" value = "ballade" checked = "checked">발라드
+                    <input type="radio" name="genre" value = "pop">팝
+                    <input type="radio" name="genre" value = "rock">락
+                    <input type="radio" name="genre" value = "rap">랩
+                </td>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <input type="submit" value="등록">
+                    <input type="reset" value="취소">
+                </th>
+            </tr>
+        </table>
+    </form>
+    <div id="show"></div>
 </body>
 </html>
