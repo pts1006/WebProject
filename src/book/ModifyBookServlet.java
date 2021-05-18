@@ -26,8 +26,8 @@ public class ModifyBookServlet extends HttpServlet {
 
 		response.setCharacterEncoding("UTF-8");
 		
-		String bc = request.getParameter("bookCode");
-		String bt = request.getParameter("bookTitle");
+		String bc = request.getParameter("bCode");
+		String bt = request.getParameter("bTitle");
 		String au = request.getParameter("author");
 		String gen = request.getParameter("genre");
 		

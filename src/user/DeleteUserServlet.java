@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/deleteUser")
-public class deleteUserServlet extends HttpServlet {
+public class DeleteUserServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
        
-    public deleteUserServlet() {
+    public DeleteUserServlet() {
         super();
     }
 

@@ -7,6 +7,7 @@ public class InfoVO {
 	private String userGender;
 	private String userSpecies;
 	private int userAge;
+	
 	public int getUserId() {
 		return userId;
 	}

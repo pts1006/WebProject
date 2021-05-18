@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/insertUser")
-public class insertUserServlet extends HttpServlet {
+public class InsertUserServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
        
-    public insertUserServlet() {
+    public InsertUserServlet() {
         super();
     }
 
@@ -41,7 +41,8 @@ public class insertUserServlet extends HttpServlet {
 		System.out.println("insert query result : " + insertCnt);
 		
 		if(insertCnt != 0) {
-			response.sendRedirect("/WebProject/servletAlone/exer_alone_3.html");			
+			response.sendRedirect("/WebProject/servletAlone/exer_alone_3.html");
+//			response.getWriter().print(insertCnt);
 		} else {
 			response.sendError(302, "중복된 값");
 		}

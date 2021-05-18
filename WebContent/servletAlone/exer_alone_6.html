@@ -15,34 +15,159 @@
 </style>
 <script>
     // 전체 출력
+    $(document).ready(function(){
+
+        $.ajax ({
+            url : '/WebProject/allStudent',
+            dataType : 'json',
+            success : function(res){
+
+                let sTable = $('<table />').attr('border', '1');
+                sTable.append(addTitle());
+
+                for(let i = 0; i < res.length; i++){
+                    
+                    let sTr = $('<tr />');
+                    let updateBtn = $('<button onclick = "updateStudent'+i+'" >').html('수정');
+                    let deleteBtn = $('<button onclick = "deleteStudent'+i+'" >').html('삭제');
+
+                    sTr.append(
+                        $('<td />').append($('<input type = "number" disabled id = "studentCode'+i+'" />').val(res[i].studentCode)),
+                        $('<td />').append($('<input type = "text" id = "studentName'+i+'" />').val(res[i].studentName)),
+                        $('<td />').append($('<input type = "number" id = "studnetGrade'+i+'" />').val(res[i].studnetGrade)),
+                        $('<td />').append($('<input type = "number" id = "studnetClass'+i+'" />').val(res[i].studnetClass)),
+                        $('<td />').append($('<input type = "text" id = "studnetGender'+i+'" />').val(res[i].studnetGender))
+                    );
+
+                    sTable.append(sTr);
+                }
+                $('#show').append(sTable);
+            },
+            error : function(err){
+                console.log(err);
+            }
+        });
+    });
 
     // 테이블 제목
+    function addTitle (){
+
+        let sTitle = $('<tr />');
+        sTitle.append(
+            $('<th />').html('학생 코드'),
+            $('<th />').html('학생 이름'),
+            $('<th />').html('학생 학년'),
+            $('<th />').html('학생 반'),
+            $('<th />').html('학생 성별'),
+            $('<th />').html('수정'),
+            $('<th />').html('삭제')
+        );
+        
+        return sTitle;
+    }
 
     // 제출
+    function submit(){
+
+        let co = document.getElementsByName('studnetCode')[0].value;
+        let na = document.getElementsByName('studnetName')[0].value;
+        let gr = document.getElementsByName('studnetGrade')[0].value;
+        let cl = document.getElementsByName('studnetClass')[0].value;
+        let ge = document.getElementsByName('studnetGender')[0].value;
+
+        let data = {
+
+            'studentCode' : co,
+            'studnetName' : na,
+            'studnetGrade' : gr,
+            'studnetClass' : cl,
+            'studnetGender' : ge
+        };
+
+        $.ajax({
+            url : '/WebProject/updateStudent',
+            data : data,
+            dataType : 'json',
+            type : 'post',
+            success : function(){
+                alert('수정')
+                location.reload();
+            },
+            error : function(err){
+                console.log(err);
+            }
+        });
+    }
 
     // 수정
+    function updateStudent(){
+
+        let data = {
+
+        };
+
+        $.ajax({
+            url : '/WebProject/updateStudent',
+            data : data,
+            dataType : 'json',
+            type : 'post',
+            success : function(){
+                alert('수정')
+                location.reload();
+            },
+            error : function(err){
+                console.log(err);
+            }
+        });
+    }
 
     // 삭제
+    function deleteStudent(){
+
+        let data = {  };
+
+        $.ajax({
+            url : '/WebProject/deleteStudent',
+            data : data,
+            dataType : 'json',
+            type : 'post',
+            success : function(){
+                alert('수정')
+                location.reload();
+            },
+            error : function(err){
+                console.log(err);
+            }
+        });
+    }
+    
 </script>
 
 <body>
     <table border="1">
-        <caption>책 등록</caption>
+        <caption>학생 등록</caption>
         <tr>
-            <td>책 번호</td>
-            <td><input type="number" name="bCode"></td>
+            <td>학생 번호</td>
+            <td><input type="number" name="studentCode" max = "200"></td>
         </tr>
         <tr>
-            <td>책 이름</td>
-            <td><input type="text" name="bTitle"></td>
+            <td>학생 이름</td>
+            <td><input type="text" name="studentName"></td>
         </tr>
         <tr>
-            <td>저자</td>
-            <td><input type="text" name="author"></td>
+            <td>학년</td>
+            <td><input type="number" name="studentGrade"></td>
         </tr>
         <tr>
-            <td>장르</td>
-            <td><input type="text" name="genre"></td>
+            <td>반</td>
+            <td><input type="number" name="studentClass"></td>
+        </tr>
+        <tr>
+            <td>성별</td>
+            <td>
+                <input type="radio" value = "M" checked = "checked" name="studentGender">남
+                <input type="radio" value = "W" name="studentGender">여
+            </td>
         </tr>
         <tr>
             <th colspan="2">

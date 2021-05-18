@@ -24,7 +24,7 @@ public class DeleteBookServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String bc = request.getParameter("bookCode");
+		String bc = request.getParameter("bCode");
 		
 		BookVO vo = new BookVO();
 		vo.setBookCode(Integer.parseInt(bc));

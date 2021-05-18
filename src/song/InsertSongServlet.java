@@ -19,6 +19,8 @@ public class InsertSongServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		// 시간나면 '음수 안 들어가게', 그리고 '같은 값 넣었을 때 경고창 뜨게' 만들기
+		
 		response.setCharacterEncoding("UTF-8");
 		
 		String sc = request.getParameter("songCode");

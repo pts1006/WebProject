@@ -18,7 +18,7 @@
     $(document).ready(function(){
 
         $.ajax({
-            url : 'WebProject/allBook',
+            url : '/WebProject/allBook',
             dataType : 'json',
             success : function(result){
 
@@ -27,7 +27,7 @@
 
                 for(let i = 0; i < result.length; i++){
 
-                    let sTr = $('<tr id = "sTr'+i+'" />');
+                    let sTr = $('<tr />');
                     let modifyBtn = $('<button onclick = "modifyBook('+i+')" />').html('수정');
                     let deleteBtn = $('<button onclick = "deleteBook('+i+')" />').html('삭제');
 
@@ -60,11 +60,14 @@
             $('<th />').html('책 번호'),
             $('<th />').html('제목'),
             $('<th />').html('저자'),
-            $('<th />').html('장르')
+            $('<th />').html('장르'),
+            $('<th />').html('수정'),
+            $('<th />').html('삭제')
         );
 
         return sTitle;
     }
+    
     // 제출
     function submit(){
 
@@ -75,13 +78,13 @@
 
         let data = {
             "bCode" : bc,
-            "btitle" : bt,
+            "bTitle" : bt,
             "author" : au,
             "genre" : ge
         };
 
         $.ajax({
-            url : 'WebProject/insertBook',
+            url : '/WebProject/insertBook',
             data : data,
             dataType : 'json',
             type : 'post',
@@ -101,13 +104,13 @@
         
         let data = {
             "bCode" : $("#bCode" + index).val(),
-            "btitle" : $("#bTitle" + index).val(),
+            "bTitle" : $("#bTitle" + index).val(),
             "author" : $("#author" + index).val(),
             "genre" : $("#genre" + index).val()
         };
 
         $.ajax({
-            url : 'WebProject/modifyBook',
+            url : '/WebProject/modifyBook',
             data : data,
             dataType : 'json',
             type : 'post',

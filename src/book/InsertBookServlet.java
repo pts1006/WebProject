@@ -19,6 +19,11 @@ public class InsertBookServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		response.setCharacterEncoding("UTF-8");
 		
 		String bc = request.getParameter("bCode");
@@ -37,11 +42,6 @@ public class InsertBookServlet extends HttpServlet {
 		
 		System.out.println("입력 결과 : " + insertCnt);
 		response.getWriter().print(insertCnt);
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
 	}
 
 }
