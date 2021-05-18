@@ -28,15 +28,15 @@
                 for(let i = 0; i < res.length; i++){
                     
                     let sTr = $('<tr />');
-                    let updateBtn = $('<button onclick = "updateStudent'+i+'" >').html('수정');
-                    let deleteBtn = $('<button onclick = "deleteStudent'+i+'" >').html('삭제');
+                    let updateBtn = $('<button onclick = "updateStudent'+i+'" />').html('수정');
+                    let deleteBtn = $('<button onclick = "deleteStudent'+i+'" />').html('삭제');
 
                     sTr.append(
-                        $('<td />').append($('<input type = "number" disabled id = "studentCode'+i+'" />').val(res[i].studentCode)),
-                        $('<td />').append($('<input type = "text" id = "studentName'+i+'" />').val(res[i].studentName)),
-                        $('<td />').append($('<input type = "number" id = "studnetGrade'+i+'" />').val(res[i].studnetGrade)),
-                        $('<td />').append($('<input type = "number" id = "studnetClass'+i+'" />').val(res[i].studnetClass)),
-                        $('<td />').append($('<input type = "text" id = "studnetGender'+i+'" />').val(res[i].studnetGender))
+                        $('<td />').append($('<input type = "number" disabled id = "studentCode'+i+'">').val(res[i].studentCode)),
+                        $('<td />').append($('<input type = "text" id = "studentName'+i+'">').val(res[i].studentName)),
+                        $('<td />').append($('<input type = "number" id = "studentGrade'+i+'" min = "1" max = "3">').val(res[i].studentGrade)),
+                        $('<td />').append($('<input type = "number" id = "studentClass'+i+'" min = "1" max = "9">').val(res[i].studentClass)),
+                        $('<td />').append($('<input type = "text" id = "studentGender'+i+'">').val(res[i].studentGender))
                     );
 
                     sTable.append(sTr);
@@ -71,12 +71,11 @@
 
         let co = document.getElementsByName('studnetCode')[0].value;
         let na = document.getElementsByName('studnetName')[0].value;
-        let gr = document.getElementsByName('studnetGrade')[0].value;
-        let cl = document.getElementsByName('studnetClass')[0].value;
+        let gr = document.getElementById('studnetGrade').value;
+        let cl = document.getElementById('studnetClass').value;
         let ge = document.getElementsByName('studnetGender')[0].value;
 
         let data = {
-
             'studentCode' : co,
             'studnetName' : na,
             'studnetGrade' : gr,
@@ -85,7 +84,7 @@
         };
 
         $.ajax({
-            url : '/WebProject/updateStudent',
+            url : '/WebProject/insertStudent',
             data : data,
             dataType : 'json',
             type : 'post',
@@ -100,10 +99,14 @@
     }
 
     // 수정
-    function updateStudent(){
+    function updateStudent(index){
 
         let data = {
-
+            'studentCode' : $('#studentCode' + index).val(),
+            'studentName' : $('#studentName' + index).val(),
+            'studentGrade' : $('#studentGrade' + index).val(),
+            'studentClass' : $('#studentClass' + index).val(),
+            'studentGender' : $('#studentGender' + index).val()
         };
 
         $.ajax({
@@ -122,9 +125,9 @@
     }
 
     // 삭제
-    function deleteStudent(){
+    function deleteStudent(index){
 
-        let data = {  };
+        let data = { 'studentCode' : $('#studentGender' + index).val() };
 
         $.ajax({
             url : '/WebProject/deleteStudent',
@@ -132,7 +135,7 @@
             dataType : 'json',
             type : 'post',
             success : function(){
-                alert('수정')
+                alert('삭제')
                 location.reload();
             },
             error : function(err){
@@ -156,11 +159,31 @@
         </tr>
         <tr>
             <td>학년</td>
-            <td><input type="number" name="studentGrade"></td>
+            <td>
+                <select id = "studentGrade">
+                    <option value="">골라 봐</option>
+                    <option value="one">1</option>
+                    <option value="two">2</option>
+                    <option value="three">3</option>
+                </select>
+            </td>
         </tr>
         <tr>
             <td>반</td>
-            <td><input type="number" name="studentClass"></td>
+            <td>
+                <select id = "studnetClass">
+                    <option value="">골라 봐</option>
+                    <option value="one">1</option>
+                    <option value="two">2</option>
+                    <option value="three">3</option>
+                    <option value="four">4</option>
+                    <option value="five">5</option>
+                    <option value="six">6</option>
+                    <option value="seven">7</option>
+                    <option value="eight">8</option>
+                    <option value="nine">9</option>
+                </select>
+            </td>
         </tr>
         <tr>
             <td>성별</td>
