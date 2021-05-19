@@ -11,7 +11,7 @@ public class DBCon {
 	public static Connection connect() {
 		
 		try {
-			conn = DriverManager.getConnection("jdbc:oracle:localhost:1521:xe", "hr", "hr");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "hr", "hr");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

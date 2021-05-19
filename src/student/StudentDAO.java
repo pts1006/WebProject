@@ -127,7 +127,7 @@ public class StudentDAO {
 		
 		int result = 0;
 		
-		String sql = "delete exam_student";
+		String sql = "delete from exam_student where student_code = ?";
 		
 		try {
 			psmt = conn.prepareStatement(sql);

@@ -13,6 +13,16 @@
         padding-top: 10px;
     }
 </style>
+<!-- 
+	남은 과제.
+		1. 등록 창에서 음수 값이나 숫자 크기에 대한 제한에 대해 경고창 뜨도록.
+		2. 등록 창에서 학년이랑 반을 지정하지 않을 경우 String값이라 값이 들어가지 않음. 값 지정해 달라고 촉구하는 문구 출력.
+		3. 등록 창에서 학생 이름도 양식을 지정할 수 있을랑가? ex) 한글로 최소최대 몇 글자
+		4. 수정 창에서 성별을 양식대로만 제출할 수 있게 ~> option 먹일까?
+		5. 수정 창에서 데이터 타입 및 등록 창과 똑같은 문제.
+		6. 삭제를 안 했는데 했는 거처럼 보이도록 만들어 보자. (실제로 삭제 기능을 쓰지 않는다. 삭제하면 안 된다. 데이터는 삭제하는 거 아니다.)
+		7. 핸드폰 숫자 제한 <정규식> 검색해 볼 것.
+-->
 <script>
     // 전체 출력
     $(document).ready(function(){
@@ -24,19 +34,22 @@
 
                 let sTable = $('<table />').attr('border', '1');
                 sTable.append(addTitle());
+                console.log(res);
 
                 for(let i = 0; i < res.length; i++){
                     
                     let sTr = $('<tr />');
-                    let updateBtn = $('<button onclick = "updateStudent'+i+'" />').html('수정');
-                    let deleteBtn = $('<button onclick = "deleteStudent'+i+'" />').html('삭제');
+                    let updateBtn = $('<button onclick = "updateStudent('+i+')" />').html('수정');
+                    let deleteBtn = $('<button onclick = "deleteStudent('+i+')" />').html('삭제');
 
                     sTr.append(
                         $('<td />').append($('<input type = "number" disabled id = "studentCode'+i+'">').val(res[i].studentCode)),
                         $('<td />').append($('<input type = "text" id = "studentName'+i+'">').val(res[i].studentName)),
                         $('<td />').append($('<input type = "number" id = "studentGrade'+i+'" min = "1" max = "3">').val(res[i].studentGrade)),
                         $('<td />').append($('<input type = "number" id = "studentClass'+i+'" min = "1" max = "9">').val(res[i].studentClass)),
-                        $('<td />').append($('<input type = "text" id = "studentGender'+i+'">').val(res[i].studentGender))
+                        $('<td />').append($('<input type = "text" id = "studentGender'+i+'">').val(res[i].studentGender)),
+                        $('<td />').html(updateBtn),
+                        $('<td />').html(deleteBtn)
                     );
 
                     sTable.append(sTr);
@@ -69,18 +82,18 @@
     // 제출
     function submit(){
 
-        let co = document.getElementsByName('studnetCode')[0].value;
-        let na = document.getElementsByName('studnetName')[0].value;
-        let gr = document.getElementById('studnetGrade').value;
-        let cl = document.getElementById('studnetClass').value;
-        let ge = document.getElementsByName('studnetGender')[0].value;
-
+        let co = document.getElementsByName('studentCode')[0].value;
+        let na = document.getElementsByName('studentName')[0].value;
+        let gr = document.getElementById('studentGrade').value;
+        let cl = document.getElementById('studentClass').value;
+        let ge = document.getElementsByName('studentGender')[0].value;
+        
         let data = {
             'studentCode' : co,
-            'studnetName' : na,
-            'studnetGrade' : gr,
-            'studnetClass' : cl,
-            'studnetGender' : ge
+            'studentName' : na,
+            'studentGrade' : gr,
+            'studentClass' : cl,
+            'studentGender' : ge
         };
 
         $.ajax({
@@ -89,7 +102,7 @@
             dataType : 'json',
             type : 'post',
             success : function(){
-                alert('수정')
+                alert('등록');
                 location.reload();
             },
             error : function(err){
@@ -127,7 +140,7 @@
     // 삭제
     function deleteStudent(index){
 
-        let data = { 'studentCode' : $('#studentGender' + index).val() };
+        let data = { 'studentCode' : $('#studentCode' + index).val() };
 
         $.ajax({
             url : '/WebProject/deleteStudent',
@@ -162,26 +175,26 @@
             <td>
                 <select id = "studentGrade">
                     <option value="">골라 봐</option>
-                    <option value="one">1</option>
-                    <option value="two">2</option>
-                    <option value="three">3</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
                 </select>
             </td>
         </tr>
         <tr>
             <td>반</td>
             <td>
-                <select id = "studnetClass">
+                <select id = "studentClass">
                     <option value="">골라 봐</option>
-                    <option value="one">1</option>
-                    <option value="two">2</option>
-                    <option value="three">3</option>
-                    <option value="four">4</option>
-                    <option value="five">5</option>
-                    <option value="six">6</option>
-                    <option value="seven">7</option>
-                    <option value="eight">8</option>
-                    <option value="nine">9</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
                 </select>
             </td>
         </tr>
